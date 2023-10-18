@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scanner_qr/mobile_scanner.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,7 +11,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+        ),
+      ),
+      home: QRScanner(),
       debugShowCheckedModeBanner: false,
       title: 'QR Code Scanner',
     );
