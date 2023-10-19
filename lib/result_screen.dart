@@ -1,10 +1,24 @@
+
+
 import 'package:flutter/material.dart';
 
 class  ResultScreen extends StatelessWidget {
-  const ResultScreen({Key? key}) : super(key: key);
+  final String scannedData;
+
+  ResultScreen({required this.scannedData});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('QR Code Result'),
+      ),
+      body: Center(
+        child: Text(
+          'QR Code Scanned: $scannedData',
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+    );
   }
 }
