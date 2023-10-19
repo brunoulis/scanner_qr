@@ -13,6 +13,7 @@ class _QRScannerState extends State<QRScanner> {
   GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   String scannedData = "";
+  bool isFlashOn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +76,39 @@ class _QRScannerState extends State<QRScanner> {
                       borderWidth: 10,
                       cutOutSize: 230,
                     )
+                  ),
+                  Positioned(
+                    bottom: 16,
+                    left: 16,
+                    child: IconButton(
+                      icon: Icon(
+                        isFlashOn ? Icons.flash_off : Icons.flash_on,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        if (controller != null) {
+                          controller!.toggleFlash();
+                          setState(() {
+                            isFlashOn = !isFlashOn;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 16,
+                    right: 16,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.flip_camera_ios,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        if (controller != null) {
+                          controller!.flipCamera();
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),
