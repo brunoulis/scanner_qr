@@ -14,8 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
+          backgroundColor: Color.fromARGB(0, 0, 0, 0),
+          elevation: 0,
+          toolbarHeight: 30,
         ),
       ),
       home: QRScanner(),

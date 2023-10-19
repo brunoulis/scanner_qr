@@ -19,7 +19,7 @@ class _QRScannerState extends State<QRScanner> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'QR Code Scanner',
           style: TextStyle(
             color: Colors.black87,
@@ -36,7 +36,7 @@ class _QRScannerState extends State<QRScanner> {
           children: [
             Expanded(
               child: Container(
-                child: Column(
+                child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -62,26 +62,26 @@ class _QRScannerState extends State<QRScanner> {
             ),
             Expanded(
               flex: 4,
-              child: QRView(
-                key: qrKey,
-                onQRViewCreated: onQRViewCreated,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                alignment: Alignment.center,
-                child: Text(
-                  scannedData,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black87,
+              child: Stack(
+                children: [
+                  QRView(
+                    key: qrKey,
+                    onQRViewCreated: onQRViewCreated,
+                    onPermissionSet: (crtl, p) => onPermissionSet(context, crtl, p),
+                    overlay: QrScannerOverlayShape(
+                      borderRadius: 10,
+                      borderColor: Color.fromARGB(255, 246, 28, 86),
+                      borderLength: 30,
+                      borderWidth: 10,
+                      cutOutSize: 300,
+                    )
                   ),
-                ),
+                ],
               ),
             ),
             Expanded(
               child: Container(
-                child: Column(
+                child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -108,17 +108,16 @@ class _QRScannerState extends State<QRScanner> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         scannedData = scanData.code!;
-        controller.dispose(); // Detener el escaneo después de encontrar un código QR
-        navigateToSecondScreen(scannedData); // Navegar a la segunda pantalla con el valor escaneado
+        controller.dispose();
+        navigateToSecondScreen(scannedData);
       });
     });
   }
 
   void navigateToSecondScreen(String data) {
-    // Navegar a la segunda pantalla y pasar el valor escaneado
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) =>  ResultScreen(scannedData: data),
+        builder: (context) => ResultScreen(scannedData: data),
       ),
     );
   }
@@ -128,6 +127,15 @@ class _QRScannerState extends State<QRScanner> {
     controller?.dispose();
     super.dispose();
   }
+  
+  onPermissionSet(BuildContext context, QRViewController crtl, bool p) {
+    if (!p) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("No se ha concedido permiso para la cámara"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 }
-
-
