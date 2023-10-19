@@ -40,10 +40,10 @@ class _QRScannerState extends State<QRScanner> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Pon el código QR dentro del área de escaneo",
+                      "Pon el código QR dentro del área de escaneo:",
                       style: TextStyle(
                         color: Colors.black87,
-                        fontSize: 16.0,
+                        fontSize: 14.5,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1,
                       ),
@@ -52,7 +52,7 @@ class _QRScannerState extends State<QRScanner> {
                     Text(
                       "El escaneo se iniciará automáticamente",
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12.9,
                         color: Colors.black54,
                       ),
                     ),
@@ -73,7 +73,7 @@ class _QRScannerState extends State<QRScanner> {
                       borderColor: Color.fromARGB(255, 246, 28, 86),
                       borderLength: 30,
                       borderWidth: 10,
-                      cutOutSize: 300,
+                      cutOutSize: 230,
                     )
                   ),
                 ],

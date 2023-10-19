@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(0, 0, 0, 0),
+          backgroundColor: Color.fromARGB(0, 246, 28, 86),
           elevation: 0,
           toolbarHeight: 30,
         ),
