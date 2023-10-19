@@ -63,6 +63,14 @@ class _QRScannerState extends State<QRScanner> {
             ),
             Expanded(
               flex: 4,
+              child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20), // ajusta el radio de las esquinas
+                border: Border.all(
+                  color: Color.fromARGB(255, 209, 209, 209),
+                  width: 10,
+                ),
+              ),
               child: Stack(
                 children: [
                   QRView(
@@ -99,7 +107,7 @@ class _QRScannerState extends State<QRScanner> {
                     bottom: 16,
                     right: 16,
                     child: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.flip_camera_ios,
                         color: Colors.white,
                       ),
@@ -112,6 +120,7 @@ class _QRScannerState extends State<QRScanner> {
                   ),
                 ],
               ),
+            ),
             ),
             Expanded(
               child: Container(
