@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:animations/animations.dart';
 import 'package:scanner_qr/result_screen.dart';
 
 void main() => runApp(MaterialApp(home: QRScanner()));
@@ -10,10 +11,7 @@ class QRScanner extends StatefulWidget {
 }
 
 class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
-  GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController? controller;
   String scannedData = "";
-  bool isFlashOn = false;
 
   @override
   void initState() {
@@ -24,17 +22,44 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
-    controller?.dispose();
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      if (controller != null) {
-        controller!.resumeCamera();
-      }
+      // Puedes agregar código aquí si es necesario
     }
+  }
+
+  void startBarcodeScan() async {
+    String barcodeScanResult = await FlutterBarcodeScanner.scanBarcode(
+      "#FF0000", // Color personalizado para el botón de escaneo
+      "Cancelar", // Texto del botón de cancelar
+      true, // Mostrar luz de flash
+      ScanMode.BARCODE, // Modo de escaneo (código de barras)
+    );
+
+    if (barcodeScanResult != '-1') {
+      navigateToSecondScreen(barcodeScanResult);
+    }
+  }
+
+  void navigateToSecondScreen(String data) {
+    print("data: $data");
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        transitionDuration: Duration(milliseconds: 350),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            ScaleTransition(
+          scale: Tween<double>(
+            begin: 0.0,
+            end: 1.0,
+          ).animate(animation),
+          child: ResultScreen(scannedData: data),
+        ),
+      ),
+    );
   }
 
   @override
@@ -43,7 +68,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'QR Code Scanner',
+          'Scanner de Códigos',
           style: TextStyle(
             color: Colors.black87,
             fontSize: 18.0,
@@ -63,7 +88,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Pon el código QR dentro del área de escaneo:",
+                      "Pon el código de barras dentro del área de escaneo:",
                       style: TextStyle(
                         color: Colors.black87,
                         fontSize: 14.5,
@@ -87,60 +112,19 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
               flex: 4,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), // ajusta el radio de las esquinas
+                  borderRadius: BorderRadius.circular(20),
                   border: Border.all(
                     color: Color.fromARGB(255, 209, 209, 209),
                     width: 10,
                   ),
                 ),
-                child: Stack(
-                  children: [
-                    QRView(
-                      key: qrKey,
-                      onQRViewCreated: onQRViewCreated,
-                      onPermissionSet: (crtl, p) => onPermissionSet(context, crtl, p),
-                      overlay: QrScannerOverlayShape(
-                        borderRadius: 10,
-                        borderColor: Color.fromARGB(255, 246, 28, 86),
-                        borderLength: 30,
-                        borderWidth: 10,
-                        cutOutSize: 230,
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 16,
-                      left: 16,
-                      child: IconButton(
-                        icon: Icon(
-                          isFlashOn ? Icons.flash_off : Icons.flash_on,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          if (controller != null) {
-                            controller!.toggleFlash();
-                            setState(() {
-                              isFlashOn = !isFlashOn;
-                            });
-                          }
-                        },
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 16,
-                      right: 16,
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.flip_camera_ios,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          if (controller != null) {
-                            controller!.flipCamera();
-                          }
-                        },
-                      ),
-                    ),
-                  ],
+                child: Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      startBarcodeScan();
+                    },
+                    child: Text("Escanear código de barras"),
+                  ),
                 ),
               ),
             ),
@@ -150,7 +134,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Developed by: GistraS.l",
+                      "Desarrollado por: Tu Nombre",
                       style: TextStyle(
                         color: Colors.black54,
                         fontSize: 16.0,
@@ -167,39 +151,6 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
       ),
     );
   }
-
-  void onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        scannedData = scanData.code!;
-        controller.pauseCamera();
-        navigateToSecondScreen(scannedData);
-      });
-    });
-  }
-
-  void navigateToSecondScreen(String data) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => ResultScreen(scannedData: data),
-      ),
-    ).then((value) {
-      if (controller != null) {
-        controller!.resumeCamera();
-      }
-    });
-  }
-
-  onPermissionSet(BuildContext context, QRViewController crtl, bool p) {
-    if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("No se ha concedido permiso para la cámara"),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  }
 }
+
 

@@ -9,7 +9,7 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR Code Result'),
+        title: Text('Resultado del Escaneo'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
@@ -17,7 +17,7 @@ class ResultScreen extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          'QR Code Scanned: $scannedData',
+          'Código Escaneado: $scannedData',
           style: TextStyle(fontSize: 18),
         ),
       ),
