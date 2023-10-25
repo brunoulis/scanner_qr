@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:scanner_qr/qr_scanner.dart';
+import 'package:scanner_qr/scanned_data_model.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(
+      ChangeNotifierProvider(
+        create: (context) => ScannedDataModel(),
+        child: MaterialApp(
+          home: QRScanner(),
+        ),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

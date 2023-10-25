@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:animations/animations.dart';
 import 'package:scanner_qr/result_screen.dart';
+import 'package:scanner_qr/scanned_data_model.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(MaterialApp(home: QRScanner()));
 
@@ -50,8 +52,9 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
     print("data: $data");
 
     print("------------------");
-    scannedResults.add(data);
-    print(scannedResults); // Agrega el resultado a la lista
+
+    Provider.of<ScannedDataModel>(context, listen: false).addScannedData(data);
+
     Navigator.of(context).push(
       PageRouteBuilder(
         transitionDuration: Duration(milliseconds: 350),
@@ -71,6 +74,15 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(44, 208, 255, 0),
+        toolbarHeight: 35,
+        elevation: 0,
+         shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(25),
+            bottomRight: Radius.circular(25),
+          ),
+        ),
         centerTitle: true,
         title: const Text(
           'Scanner de Códigos',
@@ -81,6 +93,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
             letterSpacing: 1,
           ),
         ),
+        
       ),
       body: Container(
         width: double.infinity,
@@ -104,7 +117,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                     ),
                     SizedBox(height: 10.0),
                     Text(
-                      "El escaneo se iniciará automáticamente",
+                      "Lista de códigos escaneados:",
                       style: TextStyle(
                         fontSize: 12.9,
                         color: Colors.black54,
@@ -118,7 +131,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    for (var result in scannedResults)
+                    for (var result in Provider.of<ScannedDataModel>(context).scannedResults)
                       Card(
                         child: ListTile(
                           title: Text(result),
