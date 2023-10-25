@@ -38,6 +38,7 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   animations: ^2.0.8
   camera: ^0.10.5+5
+  web_socket_channel: ^2.4.0
 
   
 

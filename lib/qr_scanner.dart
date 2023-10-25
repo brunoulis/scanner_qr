@@ -48,7 +48,10 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
 
   void navigateToSecondScreen(String data) {
     print("data: $data");
-    scannedResults.add(data); // Agrega el resultado a la lista
+
+    print("------------------");
+    scannedResults.add(data);
+    print(scannedResults); // Agrega el resultado a la lista
     Navigator.of(context).push(
       PageRouteBuilder(
         transitionDuration: Duration(milliseconds: 350),
@@ -85,6 +88,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
         child: Column(
           children: [
             Expanded(
+              flex: 0,
               child: Container(
                 child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -111,12 +115,27 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
               ),
             ),
             Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    for (var result in scannedResults)
+                      Card(
+                        child: ListTile(
+                          title: Text(result),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 0,
               child: Container(
                 child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Desarrollado por: Tu Nombre",
+                      "Desarrollado por: Gistra.sl",
                       style: TextStyle(
                         color: Colors.black54,
                         fontSize: 16.0,
@@ -128,32 +147,18 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                 ),
               ),
             ),
-           Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              margin: EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        // Agrega aquí la lógica para el primer botón flotante
-                      },
-                      child: Icon(Icons.add),
-                    ),
-                  ),
-                  Spacer(),
-                  FloatingActionButton(
-                    onPressed: () {
-                      startBarcodeScan();
-                    },
-                    child: Icon(Icons.camera_alt),
-                  ),
-                ],
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                margin: EdgeInsets.all(16.0),
+                child: FloatingActionButton(
+                  onPressed: () {
+                    startBarcodeScan();
+                  },
+                  child: Icon(Icons.camera_alt),
+                ),
               ),
             ),
-          ),
           ],
         ),
       ),
