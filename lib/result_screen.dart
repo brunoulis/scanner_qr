@@ -9,8 +9,7 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR Code Result',
-        style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),),
+        title: Text('QR Code Result'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
@@ -23,8 +22,5 @@ class ResultScreen extends StatelessWidget {
         ),
       ),
     );
-  
   }
-
-  
 }

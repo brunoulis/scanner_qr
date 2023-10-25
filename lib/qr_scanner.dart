@@ -202,3 +202,4 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
     }
   }
 }
+
