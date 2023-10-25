@@ -145,6 +145,7 @@ class _QRScannerState extends State<QRScanner> {
       ),
     );
   }
+  
 
   void onQRViewCreated(QRViewController controller) {
     this.controller = controller;
@@ -157,12 +158,26 @@ class _QRScannerState extends State<QRScanner> {
     });
   }
 
-  void navigateToSecondScreen(String data) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => ResultScreen(scannedData: data),
-      ),
-    );
+ void navigateToSecondScreen(String data) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('QR Code Result'),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
+          body: Center(
+            child: Text(
+              'QR Code Scanned: $data',
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+        );
+      },
+    ));
   }
 
   @override
