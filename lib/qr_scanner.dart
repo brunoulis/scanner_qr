@@ -9,11 +9,33 @@ class QRScanner extends StatefulWidget {
   _QRScannerState createState() => _QRScannerState();
 }
 
-class _QRScannerState extends State<QRScanner> {
+class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
   String scannedData = "";
   bool isFlashOn = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      if (controller != null) {
+        controller!.resumeCamera();
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,63 +86,63 @@ class _QRScannerState extends State<QRScanner> {
             Expanded(
               flex: 4,
               child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20), // ajusta el radio de las esquinas
-                border: Border.all(
-                  color: Color.fromARGB(255, 209, 209, 209),
-                  width: 10,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20), // ajusta el radio de las esquinas
+                  border: Border.all(
+                    color: Color.fromARGB(255, 209, 209, 209),
+                    width: 10,
+                  ),
+                ),
+                child: Stack(
+                  children: [
+                    QRView(
+                      key: qrKey,
+                      onQRViewCreated: onQRViewCreated,
+                      onPermissionSet: (crtl, p) => onPermissionSet(context, crtl, p),
+                      overlay: QrScannerOverlayShape(
+                        borderRadius: 10,
+                        borderColor: Color.fromARGB(255, 246, 28, 86),
+                        borderLength: 30,
+                        borderWidth: 10,
+                        cutOutSize: 230,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 16,
+                      left: 16,
+                      child: IconButton(
+                        icon: Icon(
+                          isFlashOn ? Icons.flash_off : Icons.flash_on,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          if (controller != null) {
+                            controller!.toggleFlash();
+                            setState(() {
+                              isFlashOn = !isFlashOn;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 16,
+                      right: 16,
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.flip_camera_ios,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          if (controller != null) {
+                            controller!.flipCamera();
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Stack(
-                children: [
-                  QRView(
-                    key: qrKey,
-                    onQRViewCreated: onQRViewCreated,
-                    onPermissionSet: (crtl, p) => onPermissionSet(context, crtl, p),
-                    overlay: QrScannerOverlayShape(
-                      borderRadius: 10,
-                      borderColor: Color.fromARGB(255, 246, 28, 86),
-                      borderLength: 30,
-                      borderWidth: 10,
-                      cutOutSize: 230,
-                    )
-                  ),
-                  Positioned(
-                    bottom: 16,
-                    left: 16,
-                    child: IconButton(
-                      icon: Icon(
-                        isFlashOn ? Icons.flash_off : Icons.flash_on,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        if (controller != null) {
-                          controller!.toggleFlash();
-                          setState(() {
-                            isFlashOn = !isFlashOn;
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 16,
-                    right: 16,
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.flip_camera_ios,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        if (controller != null) {
-                          controller!.flipCamera();
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
             ),
             Expanded(
               child: Container(
@@ -145,47 +167,30 @@ class _QRScannerState extends State<QRScanner> {
       ),
     );
   }
-  
 
   void onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         scannedData = scanData.code!;
-        controller.dispose();
+        controller.pauseCamera();
         navigateToSecondScreen(scannedData);
       });
     });
   }
 
- void navigateToSecondScreen(String data) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('QR Code Result'),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
-          body: Center(
-            child: Text(
-              'QR Code Scanned: $data',
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        );
-      },
-    ));
+  void navigateToSecondScreen(String data) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ResultScreen(scannedData: data),
+      ),
+    ).then((value) {
+      if (controller != null) {
+        controller!.resumeCamera();
+      }
+    });
   }
 
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
-  
   onPermissionSet(BuildContext context, QRViewController crtl, bool p) {
     if (!p) {
       ScaffoldMessenger.of(context).showSnackBar(
