@@ -12,6 +12,7 @@ class QRScanner extends StatefulWidget {
 
 class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   String scannedData = "";
+  List<String> scannedResults = [];
 
   @override
   void initState() {
@@ -47,6 +48,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
 
   void navigateToSecondScreen(String data) {
     print("data: $data");
+    scannedResults.add(data); // Agrega el resultado a la lista
     Navigator.of(context).push(
       PageRouteBuilder(
         transitionDuration: Duration(milliseconds: 350),
@@ -109,26 +111,6 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
               ),
             ),
             Expanded(
-              flex: 4,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: Color.fromARGB(255, 209, 209, 209),
-                    width: 10,
-                  ),
-                ),
-                child: Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      startBarcodeScan();
-                    },
-                    child: Text("Escanear código de barras"),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
               child: Container(
                 child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -146,11 +128,35 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                 ),
               ),
             ),
+           Align(
+            alignment: Alignment.bottomRight,
+            child: Container(
+              margin: EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        // Agrega aquí la lógica para el primer botón flotante
+                      },
+                      child: Icon(Icons.add),
+                    ),
+                  ),
+                  Spacer(),
+                  FloatingActionButton(
+                    onPressed: () {
+                      startBarcodeScan();
+                    },
+                    child: Icon(Icons.camera_alt),
+                  ),
+                ],
+              ),
+            ),
+          ),
           ],
         ),
       ),
     );
   }
 }
-
-
