@@ -165,6 +165,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
               child: Container(
                 margin: EdgeInsets.all(16.0),
                 child: FloatingActionButton(
+                  backgroundColor: Color.fromARGB(132, 234, 254, 143),
                   onPressed: () {
                     startBarcodeScan();
                   },
