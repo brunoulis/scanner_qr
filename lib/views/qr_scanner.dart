@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:animations/animations.dart';
 import 'package:scanner_qr/controllers/constantes.dart';
+import 'package:scanner_qr/modelo/app_settings.dart';
 import 'package:scanner_qr/views/result_screen.dart';
 import 'package:scanner_qr/modelo/scanned_data_model.dart';
 import 'package:provider/provider.dart';
@@ -24,14 +25,28 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addObserver(this);
+    if(mounted){
+      super.initState();
+      WidgetsBinding.instance!.addObserver(this);
+      _setDefaultValues();
+    }
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
+  }
+  _setDefaultValues() async {
+    if(mounted){
+      bool existeArchivo = await widget.constantes.existFile();
+      if (existeArchivo) {
+        AppSettings? appSettings = await widget.constantes.leerObjetoDesdeArchivo();
+        if (appSettings != null) {
+          widget.constantes.appSettings = appSettings;
+        }
+      }
+    }
   }
 
   @override

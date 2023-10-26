@@ -14,7 +14,7 @@ class ConnectionController {
   // Constructor vacio
   ConnectionController();
 
-  static Future<bool> isHostReachable(String host, int port, {Duration timeout = const Duration(seconds: 5)}) async {
+  static Future<bool> isHostReachable(String host, int port, {Duration timeout = const Duration(seconds: 2)}) async {
     try {
       final socket = await Socket.connect(host, port, timeout: timeout);
       return true;
