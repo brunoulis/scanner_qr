@@ -45,8 +45,22 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
         if (appSettings != null) {
           widget.constantes.appSettings = appSettings;
         }
+      }else{
+        // Abrimos la pantalla de configuración
+        _showErrorDialog("No se ha encontrado el archivo de configuración");
+        _toSettings();
       }
     }
+  }
+
+
+  void _toSettings() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Settings(constantes: widget.constantes,),
+      ),
+    );
   }
 
   @override

@@ -121,7 +121,7 @@ class ResultScreenState extends State<ResultScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: Colors.green,
+        backgroundColor: const Color.fromARGB(255, 65, 148, 68),
         duration: const Duration(seconds: 1),
       ),
     );
