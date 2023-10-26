@@ -107,7 +107,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
             begin: 0.0,
             end: 1.0,
           ).animate(animation),
-          child: ResultScreen(scannedData: data),
+          child: ResultScreen(constantes: widget.constantes,scannedData: data),
         ),
       ),
     );

@@ -17,7 +17,6 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _portController = TextEditingController();
-  final TextEditingController _licenseController = TextEditingController();
 
   @override
   void initState() {
@@ -38,11 +37,9 @@ class _SettingsState extends State<Settings> {
                 _header(context),
                 SizedBox(height: 30),
                 _serverUriField(context),
-                SizedBox(height: 20),
+                SizedBox(height: 25),
                 _portField(context),
-                SizedBox(height: 20),
-                _licenseField(context),
-                SizedBox(height: 20),
+                SizedBox(height: 50),
                 _saveButton(context),
               ],
             ),
@@ -59,7 +56,6 @@ class _SettingsState extends State<Settings> {
       if (appSettings != null) {
         _addressController.text = appSettings.address;
         _portController.text = appSettings.port;
-        _licenseController.text = appSettings.license;
         // Guardamos las settings en constantes
         widget.constantes.appSettings = appSettings;
       }
@@ -138,27 +134,7 @@ _portField(context) {
   );
 }
 
-  _licenseField(context) {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: "Licencia",
-        labelStyle: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
-        ),
-        fillColor: Color.fromARGB(255, 80, 80, 80).withOpacity(0.1),
-        filled: true,
-      ),
-      cursorColor: Color.fromARGB(255, 0, 0, 0),
-      controller: _licenseController,
-      obscureText: true, // esta línea para ocultar el texto
-    );
-  }
+
 
   _saveButton(context) {
     return ElevatedButton(
@@ -167,7 +143,6 @@ _portField(context) {
         AppSettings appSettings = AppSettings(
           address: _addressController.text,
           port: _portController.text,
-          license: _licenseController.text,
         );
         widget.constantes.guardarSettingsEnArchivo(appSettings);
         widget.constantes.appSettings = appSettings;

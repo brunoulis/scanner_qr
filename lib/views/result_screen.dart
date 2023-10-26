@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scanner_qr/controllers/connection_controller.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:scanner_qr/controllers/constantes.dart';
 import 'package:scanner_qr/modelo/scanned_data_model.dart';
 import 'package:scanner_qr/modelo/tipo.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +9,9 @@ import 'package:provider/provider.dart';
 
 class ResultScreen extends StatefulWidget {
   final String scannedData;
+  final Constantes constantes;
 
-  ResultScreen({required this.scannedData});
+  ResultScreen({required this.constantes,required this.scannedData});
 
   @override
   ResultScreenState createState() => ResultScreenState();
@@ -39,7 +41,7 @@ class ResultScreenState extends State<ResultScreen> {
 
 
   void sendData() async {
-    Tipo? tipo = await ConnectionController.sendaDataWithio(widget.scannedData);
+    Tipo? tipo = await ConnectionController.sendaDataWithio(widget.scannedData,widget.constantes.appSettings!.address, int.parse(widget.constantes.appSettings!.port));
     if (tipo != null) {
       // Haz algo con el objeto tipo
       if(tipo.error==0){

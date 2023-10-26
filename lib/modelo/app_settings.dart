@@ -4,16 +4,14 @@ class AppSettings {
   // Y donde instanciaremos los valores de la configuración de la aplicación
   String address;
   String port;
-  String license;
 
-  AppSettings({required this.address, required this.port, required this.license});
+  AppSettings({required this.address, required this.port});
 
   // Metodo para convertir el objeto a un mapa
   Map<String, dynamic> toMap() {
     return {
       'address': address,
       'port': port,
-      'license': license,
     };
   }
   // FromMap es un metodo que nos permite convertir un mapa a un objeto
@@ -22,7 +20,6 @@ class AppSettings {
     return AppSettings(
       address: map['address'],
       port: map['port'],
-      license: map['license'],
     );
   }
 }
