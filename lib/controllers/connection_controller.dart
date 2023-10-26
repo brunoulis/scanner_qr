@@ -5,7 +5,6 @@ import 'package:scanner_qr/modelo/tipo.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class ConnectionController {
-  static const String webSocketUrl = 'ws://192.168.14.89:8970/ws'; // URL del servidor WebSocket
   //8970
   //45782
 
@@ -26,8 +25,6 @@ class ConnectionController {
   // Funcion usando dart:io para enviar datos por WebSocket
   static Future<Tipo?> sendaDataWithio(String data, String host, int port) async {
     try {
-      // Crea el canal de comunicacion con protocol tls (wss)
-      // Diferentes tipos de protocolos: https://developer.mozilla.org/es/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
       if (await isHostReachable(host, port)) {
         _channel ??= WebSocketChannel.connect(
               Uri.parse('ws://$host:$port/803672868'),
