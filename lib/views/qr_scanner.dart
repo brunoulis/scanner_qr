@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:animations/animations.dart';
-import 'package:scanner_qr/result_screen.dart';
+import 'package:scanner_qr/views/result_screen.dart';
 import 'package:scanner_qr/modelo/scanned_data_model.dart';
 import 'package:provider/provider.dart';
 
@@ -131,7 +131,14 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
             letterSpacing: 1,
           ),
         ),
-        
+        leading: IconButton(
+          icon: const Icon(Icons.settings,
+          color:  Color.fromARGB(255, 0, 0, 0),),
+          onPressed: () {
+            // Navega a la pestaña de configuración
+            Navigator.pushNamed(context, '/settings');
+          },
+        ),
       ),
       body: Container(
         width: double.infinity,
@@ -207,7 +214,8 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                   onPressed: () {
                     startBarcodeScan();
                   },
-                  child: Icon(Icons.camera_alt),
+                  child: Icon(Icons.camera_alt,
+                  color:  Color.fromARGB(255, 0, 0, 0),),
                 ),
               ),
             ),
