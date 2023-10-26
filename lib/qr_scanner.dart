@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:animations/animations.dart';
 import 'package:scanner_qr/result_screen.dart';
-import 'package:scanner_qr/scanned_data_model.dart';
+import 'package:scanner_qr/modelo/scanned_data_model.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MaterialApp(home: QRScanner()));

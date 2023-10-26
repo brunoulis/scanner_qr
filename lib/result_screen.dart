@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scanner_qr/connection_controller.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:scanner_qr/modelo/scanned_data_model.dart';
+import 'package:scanner_qr/modelo/tipo.dart';
+import 'package:provider/provider.dart';
 
 
 class ResultScreen extends StatefulWidget {
@@ -15,6 +18,50 @@ class ResultScreen extends StatefulWidget {
 }
 
 class ResultScreenState extends State<ResultScreen> {
+  Tipo? _tipo;
+
+
+  @override
+  void initState() {
+    if(mounted){
+      super.initState();
+      sendData();
+    }
+  }
+
+  void deleteElementList(){
+    // Buscamos el dato en la lista de datos escaneados y lo eliminamos  
+      int index = Provider.of<ScannedDataModel>(context, listen: false).scannedResults.indexOf(widget.scannedData);
+      if (index != -1) {
+      Provider.of<ScannedDataModel>(context, listen: false).deleteScannedData(index);
+      }
+  }
+
+
+  void sendData() async {
+    Tipo? tipo = await ConnectionController.sendaDataWithio(widget.scannedData);
+    if (tipo != null) {
+      // Haz algo con el objeto tipo
+      if(tipo.error==0){
+        print("Esta es la descripcion"+tipo.descripcion);
+        _showSuccessSnackbar(tipo.descripcion);
+      }else{
+        _showErrorDialog(tipo.descripcion);
+        deleteElementList();
+      }
+
+      
+    }else{
+      _showErrorDialog("No se pudo conectar con el servidor");
+      deleteElementList();
+      setState(() {
+        _tipo = null;
+        
+      });
+      
+    }
+
+  }
   
 
    // Agrega esta función para mostrar el diálogo
@@ -44,6 +91,15 @@ class ResultScreenState extends State<ResultScreen> {
           ],
         );
       },
+    );
+  }
+
+  void _showSuccessSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.green,
+      ),
     );
   }
 
@@ -92,12 +148,6 @@ class ResultScreenState extends State<ResultScreen> {
             Text(
               'Código Escaneado: ${widget.scannedData}',
               style: TextStyle(fontSize: 18),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await ConnectionController.sendaDataWithio(widget.scannedData);
-              },
-              child: Text('Enviar por WebSocket'),
             ),
           ],
         ),

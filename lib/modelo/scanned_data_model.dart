@@ -10,4 +10,8 @@ class ScannedDataModel with ChangeNotifier {
     scannedResults.add(data);
     notifyListeners();
   }
+  void deleteScannedData(int index) {
+    scannedResults.removeAt(index);
+    notifyListeners();
+  }
 }
