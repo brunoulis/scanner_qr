@@ -7,6 +7,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class ConnectionController {
   static const String webSocketUrl = 'ws://192.168.14.89:8970/ws'; // URL del servidor WebSocket
   //8970
+  //45782
 
   // Constructor vacio
   ConnectionController();
@@ -28,7 +29,7 @@ class ConnectionController {
     try{ 
       // Crea el canal de comunicacion con protocol tls (wss)
       // Diferentes tipos de protocolos: https://developer.mozilla.org/es/docs/Web/API/WebSockets_API/Writing_WebSocket_servers
-      if (await isHostReachable(host, 45782)) {
+      if (await isHostReachable(host, port)) {
         final channel = WebSocketChannel.connect(
             Uri.parse('ws://$host:$port/803672868'),
             protocols: ['echo-protocol']);
@@ -41,6 +42,9 @@ class ConnectionController {
         print(jsonMap);
         channel.sink.close();
         return tipo;
+      }else{
+        print("No se pudo conectar con el servidor");
+        return null;
       }
       
     

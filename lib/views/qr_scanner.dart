@@ -224,7 +224,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                   onPressed: () {
                     startBarcodeScan();
                   },
-                  child: Icon(Icons.camera_alt,
+                  child: const Icon(Icons.camera_alt,
                   color:  Color.fromARGB(255, 0, 0, 0),),
                 ),
               ),

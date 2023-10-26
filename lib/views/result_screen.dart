@@ -85,7 +85,7 @@ class ResultScreenState extends State<ResultScreen> {
               },
               child: const Text("Volver",
                 style: TextStyle(
-                color: Color.fromARGB(255, 145, 14, 2),
+                color: Color.fromARGB(255, 0, 0, 0),
                 fontWeight: FontWeight.w800
                             )
               ),
