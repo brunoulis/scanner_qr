@@ -1,12 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:scanner_qr/connection_controller.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 
-class ResultScreen extends StatelessWidget {
+
+class ResultScreen extends StatefulWidget {
   final String scannedData;
 
   ResultScreen({required this.scannedData});
+
+  @override
+  ResultScreenState createState() => ResultScreenState();
+
+
+}
+
+class ResultScreenState extends State<ResultScreen> {
+  
+
+   // Agrega esta función para mostrar el diálogo
+  void _showErrorDialog(String error) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Error',
+          style: TextStyle(
+            fontWeight: FontWeight.w800
+           )
+          ),
+          content: Text(error),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK",
+                style: TextStyle(
+                color: Color.fromARGB(255, 145, 14, 2),
+                fontWeight: FontWeight.w800
+                            )
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +79,23 @@ class ResultScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Container(
+              margin: EdgeInsets.only(bottom: 16),
+              child: BarcodeWidget(
+                barcode: Barcode.code128(),
+                data: widget.scannedData,
+                width: 200,
+                height: 80,
+                style: TextStyle(fontSize: 12),
+              ),
+            ),
             Text(
-              'Código Escaneado: $scannedData',
+              'Código Escaneado: ${widget.scannedData}',
               style: TextStyle(fontSize: 18),
             ),
             ElevatedButton(
               onPressed: () async {
-                await ConnectionController.sendaDataWithio(scannedData);
+                await ConnectionController.sendaDataWithio(widget.scannedData);
               },
               child: Text('Enviar por WebSocket'),
             ),

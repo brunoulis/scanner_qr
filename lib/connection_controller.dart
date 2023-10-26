@@ -22,6 +22,8 @@ static Future<void> sendaDataWithio(String data) async{
     print(respuesta);
     channel.sink.close();
     
+  }on  WebSocketChannelException {
+    print("Error al enviar el dato");
   }catch(e){
     print("Error al enviar el dato");
     print(e);

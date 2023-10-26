@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:animations/animations.dart';
 import 'package:scanner_qr/result_screen.dart';
@@ -36,6 +37,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   }
 
   void startBarcodeScan() async {
+    try{
     String barcodeScanResult = await FlutterBarcodeScanner.scanBarcode(
       "#FF0000", // Color personalizado para el botón de escaneo
       "Cancelar", // Texto del botón de cancelar
@@ -46,7 +48,43 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
     if (barcodeScanResult != '-1') {
       navigateToSecondScreen(barcodeScanResult);
     }
+    }on PlatformException{
+      _showErrorDialog("Error al escanear el código");
+    }catch(e){
+      _showErrorDialog("Error desconocido $e");
+    }
   }
+
+   // Agrega esta función para mostrar el diálogo
+  void _showErrorDialog(String error) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Error',
+          style: TextStyle(
+            fontWeight: FontWeight.w800
+           )
+          ),
+          content: Text(error),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK",
+                style: TextStyle(
+                color: Color.fromARGB(255, 145, 14, 2),
+                fontWeight: FontWeight.w800
+                            )
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   void navigateToSecondScreen(String data) {
     print("data: $data");
