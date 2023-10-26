@@ -62,10 +62,16 @@ class _SettingsState extends State<Settings> {
       AppSettings? appSettings = await widget.constantes.leerObjetoDesdeArchivo();
       if (appSettings != null) {
         _addressController.text = appSettings.address;
-        _portController.text = appSettings.port;
+        if (appSettings.port =="" || appSettings.port == null) {
+          appSettings.port = "8970";
+        }else{
+          _portController.text = appSettings.port;
+        }
         // Guardamos las settings en constantes
         widget.constantes.appSettings = appSettings;
       }
+    }else{
+      _portController.text = "8970";
     }
     if (mounted) {
       setState(() {
