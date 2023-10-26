@@ -31,6 +31,12 @@ class ResultScreenState extends State<ResultScreen> {
     }
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    ConnectionController.closeConnection();
+  }
+
   void deleteElementList(){
     // Buscamos el dato en la lista de datos escaneados y lo eliminamos  
       int index = Provider.of<ScannedDataModel>(context, listen: false).scannedResults.indexOf(widget.scannedData);
