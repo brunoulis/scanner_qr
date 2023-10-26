@@ -63,7 +63,8 @@ class _SettingsState extends State<Settings> {
       if (appSettings != null) {
         _addressController.text = appSettings.address;
         if (appSettings.port =="" || appSettings.port == null) {
-          appSettings.port = "8970";
+          _portController.text = "8970";
+          appSettings.port =_portController.text;
         }else{
           _portController.text = appSettings.port;
         }

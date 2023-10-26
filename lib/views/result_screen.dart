@@ -62,6 +62,7 @@ class ResultScreenState extends State<ResultScreen> {
         }
       }else{
         _showErrorDialog(tipo.descripcion);
+        _showErrorSnackbar("Vuelve a atrás y escanea de nuevo");
         deleteElementList();
         if(mounted){
           setState(() {
@@ -74,6 +75,7 @@ class ResultScreenState extends State<ResultScreen> {
       
     }else{
       _showErrorDialog("No se pudo conectar con el servidor");
+      _showErrorSnackbar("Vuelve a atrás y escanea de nuevo");
       deleteElementList();
       if(mounted){
         setState(() {
@@ -114,6 +116,16 @@ class ResultScreenState extends State<ResultScreen> {
           ],
         );
       },
+    );
+  }
+
+    void _showErrorSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Color.fromARGB(255, 155, 16, 16),
+        duration: const Duration(seconds: 2),
+      ),
     );
   }
 
