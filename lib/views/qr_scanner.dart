@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:animations/animations.dart';
+import 'package:scanner_qr/controllers/constantes.dart';
 import 'package:scanner_qr/views/result_screen.dart';
 import 'package:scanner_qr/modelo/scanned_data_model.dart';
 import 'package:provider/provider.dart';
+import 'package:scanner_qr/views/settings.dart';
 
-void main() => runApp(MaterialApp(home: QRScanner()));
 
 class QRScanner extends StatefulWidget {
+  final Constantes constantes;
+  
+  const QRScanner({super.key,  required this.constantes});
+
   @override
   _QRScannerState createState() => _QRScannerState();
 }
@@ -72,7 +77,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text("OK",
+              child: const Text("Volver",
                 style: TextStyle(
                 color: Color.fromARGB(255, 145, 14, 2),
                 fontWeight: FontWeight.w800
@@ -136,7 +141,12 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
           color:  Color.fromARGB(255, 0, 0, 0),),
           onPressed: () {
             // Navega a la pestaña de configuración
-            Navigator.pushNamed(context, '/settings');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Settings(constantes: widget.constantes,),
+              ),
+            );
           },
         ),
       ),
