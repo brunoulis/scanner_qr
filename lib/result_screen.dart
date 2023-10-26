@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scanner_qr/connection_controller.dart';
+import 'package:scanner_qr/controllers/connection_controller.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:scanner_qr/modelo/scanned_data_model.dart';
 import 'package:scanner_qr/modelo/tipo.dart';
@@ -81,9 +81,9 @@ class ResultScreenState extends State<ResultScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text("OK",
+              child: const Text("Volver",
                 style: TextStyle(
-                color: Color.fromARGB(255, 145, 14, 2),
+                color: Color.fromARGB(132, 234, 254, 143),
                 fontWeight: FontWeight.w800
                             )
               ),
