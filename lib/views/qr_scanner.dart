@@ -48,7 +48,10 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
       }else{
         // Abrimos la pantalla de configuración
         _showErrorDialog("No se ha encontrado el archivo de configuración");
-        _toSettings();
+        //dar un delay de dos segundos
+        Future.delayed(const Duration(seconds: 2), () {
+          _toSettings();
+        });
       }
     }
   }
