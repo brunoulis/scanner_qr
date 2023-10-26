@@ -17,6 +17,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _portController = TextEditingController();
+  bool _loading = true;
 
   @override
   void initState() {
@@ -28,7 +29,13 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
+        body : _loading
+          ? const Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 6, 6, 6)),
+              ),
+            )
+          : SingleChildScrollView(
           child: Container(
             margin: EdgeInsets.all(24),
             child: Column(
@@ -60,6 +67,21 @@ class _SettingsState extends State<Settings> {
         widget.constantes.appSettings = appSettings;
       }
     }
+    if (mounted) {
+      setState(() {
+        _loading = false;
+      });
+    }
+  }
+
+    void _showSuccessSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: const Color.fromARGB(255, 65, 148, 68),
+        duration: const Duration(seconds: 1),
+      ),
+    );
   }
 
   _header(context) {
@@ -146,6 +168,7 @@ _portField(context) {
         );
         widget.constantes.guardarSettingsEnArchivo(appSettings);
         widget.constantes.appSettings = appSettings;
+        _showSuccessSnackbar("Configuración guardada");
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => QRScanner(constantes: widget.constantes,)),

@@ -21,6 +21,7 @@ class ResultScreen extends StatefulWidget {
 
 class ResultScreenState extends State<ResultScreen> {
   Tipo? _tipo;
+  bool _loading = true;
 
 
   @override
@@ -53,19 +54,33 @@ class ResultScreenState extends State<ResultScreen> {
       if(tipo.error==0){
         print("Esta es la descripcion"+tipo.descripcion);
         _showSuccessSnackbar(tipo.descripcion);
+        if(mounted){
+          setState(() {
+            _tipo = tipo;
+            _loading = false;
+          });
+        }
       }else{
         _showErrorDialog(tipo.descripcion);
         deleteElementList();
+        if(mounted){
+          setState(() {
+            _tipo = null;
+            _loading = false;
+          });
+        }
       }
 
       
     }else{
       _showErrorDialog("No se pudo conectar con el servidor");
       deleteElementList();
-      setState(() {
-        _tipo = null;
-        
-      });
+      if(mounted){
+        setState(() {
+          _tipo = null;
+          _loading = false;
+        });
+      }
       
     }
 
@@ -139,27 +154,34 @@ class ResultScreenState extends State<ResultScreen> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: EdgeInsets.only(bottom: 16),
-              child: BarcodeWidget(
-                barcode: Barcode.code128(),
-                data: widget.scannedData,
-                width: 200,
-                height: 80,
-                style: TextStyle(fontSize: 12),
+      body:
+         _loading
+          ? const Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 0, 0, 0)),
               ),
-            ),
-            Text(
-              'Código Escaneado: ${widget.scannedData}',
-              style: TextStyle(fontSize: 18),
-            ),
-          ],
+            )
+        : Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(bottom: 16),
+                child: BarcodeWidget(
+                  barcode: Barcode.code128(),
+                  data: widget.scannedData,
+                  width: 200,
+                  height: 80,
+                  style: TextStyle(fontSize: 12),
+                ),
+              ),
+              Text(
+                'Código Escaneado: ${widget.scannedData}',
+                style: TextStyle(fontSize: 18),
+              ),
+            ],
+          ),
         ),
-      ),
     );
   }
 }
