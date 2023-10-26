@@ -120,13 +120,13 @@ class ResultScreenState extends State<ResultScreen> {
   }
 
     void _showErrorSnackbar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Color.fromARGB(255, 155, 16, 16),
-        duration: const Duration(seconds: 2),
-      ),
-    );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Color.fromARGB(255, 155, 16, 16),
+          duration: const Duration(seconds: 2),
+        ),
+      );
   }
 
   void _showSuccessSnackbar(String message) {
