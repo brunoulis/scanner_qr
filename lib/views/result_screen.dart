@@ -122,6 +122,7 @@ class ResultScreenState extends State<ResultScreen> {
       SnackBar(
         content: Text(message),
         backgroundColor: Colors.green,
+        duration: const Duration(seconds: 2),
       ),
     );
   }
