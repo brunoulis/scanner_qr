@@ -178,7 +178,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
         ),
         leading: IconButton(
           icon:  isIOS()
-          ? const Icon(CupertinoIcons.settings, color: Color.fromARGB(255, 0, 0, 0))
+          ? const Icon(CupertinoIcons.settings_solid, color: Color.fromARGB(255, 0, 0, 0))
           : const Icon(Icons.settings, color: Color.fromARGB(255, 0, 0, 0)),
           onPressed: () {
             // Navega a la pestaña de configuración
@@ -266,7 +266,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                     startBarcodeScan();
                   },
                   child: isIOS()
-                      ? const Icon(CupertinoIcons.photo_camera, color: Color.fromARGB(255, 0, 0, 0))
+                      ? const Icon(CupertinoIcons.photo_camera_solid, color: Color.fromARGB(255, 0, 0, 0))
                       : const Icon(Icons.camera_alt, color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),

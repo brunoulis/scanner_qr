@@ -175,7 +175,7 @@ class ResultScreenState extends State<ResultScreen> {
         ),
         leading: IconButton(
           icon:  isIOS()
-                ? const Icon(CupertinoIcons.arrow_left,color: Colors.black,)
+                ? const Icon(CupertinoIcons.back,color: Colors.black,)
                 : const Icon(Icons.arrow_back,color: Colors.black,),
           onPressed: () => Navigator.of(context).pop(),
         ),
