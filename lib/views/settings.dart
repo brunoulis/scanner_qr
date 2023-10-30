@@ -48,7 +48,20 @@ class SettingsState extends State<Settings> {
                 const SizedBox(height: 25),
                 _portField(context),
                 const SizedBox(height: 50),
-                _saveButton(context),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child:_cancelButton(context)
+                    ),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      flex: 1,
+                      child: _saveButton(context),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -83,11 +96,20 @@ class SettingsState extends State<Settings> {
     }
   }
 
-    void _showSuccessSnackbar(String message) {
+  void _showSuccessSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
         backgroundColor: const Color.fromARGB(255, 65, 148, 68),
+        duration: const Duration(seconds: 1),
+      ),
+    );
+  }
+  void _showCancelSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: const Color.fromARGB(255, 145, 14, 2),
         duration: const Duration(seconds: 1),
       ),
     );
@@ -190,6 +212,26 @@ _portField(context) {
       ),
       child: const Text(
         "Guardar",
+        style: TextStyle(fontSize: 20),
+      ),
+    );
+  }
+  _cancelButton(context) {
+    return ElevatedButton(
+      onPressed: () {
+        _showCancelSnackbar("No se guardaron los cambios");
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => QRScanner(constantes: widget.constantes,)),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        shape: const StadiumBorder(),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        backgroundColor: const Color.fromARGB(255, 145, 14, 2),
+      ),
+      child: const Text(
+        "Cancelar",
         style: TextStyle(fontSize: 20),
       ),
     );
