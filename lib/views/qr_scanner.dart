@@ -137,12 +137,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
 
 
   void navigateToSecondScreen(String data) {
-    print("data: $data");
-
-    print("------------------");
-
     Provider.of<ScannedDataModel>(context, listen: false).addScannedData(data);
-
     Navigator.of(context).push(
       PageRouteBuilder(
         transitionDuration: Duration(milliseconds: 350),

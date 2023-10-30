@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scanner_qr/controllers/connection_controller.dart';
 import 'package:barcode_widget/barcode_widget.dart';
@@ -139,6 +142,14 @@ class ResultScreenState extends State<ResultScreen> {
     );
   }
 
+  bool isIOS() {
+    if (Platform.isIOS) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +174,9 @@ class ResultScreenState extends State<ResultScreen> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon:  isIOS()
+                ? const Icon(CupertinoIcons.arrow_left,color: Colors.black,)
+                : const Icon(Icons.arrow_back,color: Colors.black,),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
