@@ -206,7 +206,9 @@ _portField(context) {
         );
       },
       style: ElevatedButton.styleFrom(
-        shape: const StadiumBorder(),
+        shape: ContinuousRectangleBorder(
+          borderRadius: BorderRadius.circular(35.0),
+        ),
         padding: const EdgeInsets.symmetric(vertical: 16),
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       ),
@@ -226,7 +228,9 @@ _portField(context) {
         );
       },
       style: ElevatedButton.styleFrom(
-        shape: const StadiumBorder(),
+        shape: ContinuousRectangleBorder(
+          borderRadius: BorderRadius.circular(35.0),
+        ),
         padding: const EdgeInsets.symmetric(vertical: 16),
         backgroundColor: const Color.fromARGB(255, 145, 14, 2),
       ),
