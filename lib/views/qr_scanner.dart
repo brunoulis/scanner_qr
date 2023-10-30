@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -123,6 +126,16 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   }
 
 
+  // Funcion que servira par detectar el sistema operativo y mostrar el icono correspondiente
+   bool isIOS() {
+    if (Platform.isIOS) {
+      return true;
+    } else {
+      return false;
+    }
+   }
+
+
   void navigateToSecondScreen(String data) {
     print("data: $data");
 
@@ -169,8 +182,9 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.settings,
-          color:  Color.fromARGB(255, 0, 0, 0),),
+          icon:  isIOS()
+          ? const Icon(CupertinoIcons.settings, color: Color.fromARGB(255, 0, 0, 0))
+          : const Icon(Icons.settings, color: Color.fromARGB(255, 0, 0, 0)),
           onPressed: () {
             // Navega a la pestaña de configuración
             Navigator.push(
@@ -256,8 +270,9 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                   onPressed: () {
                     startBarcodeScan();
                   },
-                  child: const Icon(Icons.camera_alt,
-                  color:  Color.fromARGB(255, 0, 0, 0),),
+                  child: isIOS()
+                      ? const Icon(CupertinoIcons.photo_camera, color: Color.fromARGB(255, 0, 0, 0))
+                      : const Icon(Icons.camera_alt, color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
             ),
