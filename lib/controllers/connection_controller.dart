@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -32,21 +34,21 @@ class ConnectionController {
         _channel!.sink.add(data);
         // Escucha la respuesta del servidor
         final respuesta = await _channel!.stream.first;
-        print(respuesta);
+        //print(respuesta);
         Map<String, dynamic> jsonMap = jsonDecode(respuesta);
         Tipo? tipo = Tipo.fromJson(jsonMap);
-        print(jsonMap);
+        //print(jsonMap);
         return tipo;
       } else {
-        print("No se pudo conectar con el servidor");
+        //print("No se pudo conectar con el servidor");
         return null;
       }
     } on WebSocketChannelException {
-      print("Error WebSocketChannelException");
+      //print("Error WebSocketChannelException");
       return null;
     } catch (e) {
-      print("Error al enviar el dato");
-      print(e);
+      //print("Error al enviar el dato");
+      //print(e);
       return null;
     }
   }
