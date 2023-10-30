@@ -14,7 +14,7 @@ class ResultScreen extends StatefulWidget {
   final String scannedData;
   final Constantes constantes;
 
-  ResultScreen({required this.constantes,required this.scannedData});
+  const ResultScreen({super.key, required this.constantes,required this.scannedData});
 
   @override
   ResultScreenState createState() => ResultScreenState();
@@ -23,6 +23,7 @@ class ResultScreen extends StatefulWidget {
 }
 
 class ResultScreenState extends State<ResultScreen> {
+  // ignore: unused_field
   Tipo? _tipo;
   bool _loading = true;
 
@@ -55,7 +56,7 @@ class ResultScreenState extends State<ResultScreen> {
     if (tipo != null) {
       // Haz algo con el objeto tipo
       if(tipo.error==0){
-        print("Esta es la descripcion"+tipo.descripcion);
+        //print("Esta es la descripcion"+tipo.descripcion);
         _showSuccessSnackbar(tipo.descripcion);
         if(mounted){
           setState(() {
@@ -126,7 +127,7 @@ class ResultScreenState extends State<ResultScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(message),
-          backgroundColor: Color.fromARGB(255, 155, 16, 16),
+          backgroundColor: const Color.fromARGB(255, 155, 16, 16),
           duration: const Duration(seconds: 2),
         ),
       );
@@ -155,7 +156,7 @@ class ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
        appBar: AppBar(
-        backgroundColor: Color.fromARGB(44, 208, 255, 0),
+        backgroundColor: const Color.fromARGB(44, 208, 255, 0),
         toolbarHeight: 40,
         elevation: 0,
          shape: const RoundedRectangleBorder(
@@ -192,18 +193,18 @@ class ResultScreenState extends State<ResultScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: EdgeInsets.only(bottom: 16),
+                margin:const  EdgeInsets.only(bottom: 16),
                 child: BarcodeWidget(
                   barcode: Barcode.code128(),
                   data: widget.scannedData,
                   width: 200,
                   height: 80,
-                  style: TextStyle(fontSize: 12),
+                  style:const  TextStyle(fontSize: 12),
                 ),
               ),
               Text(
                 'Código Escaneado: ${widget.scannedData}',
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
             ],
           ),

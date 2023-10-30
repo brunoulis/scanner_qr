@@ -4,6 +4,7 @@ import 'package:scanner_qr/controllers/constantes.dart';
 import 'package:scanner_qr/modelo/app_settings.dart';
 import 'package:scanner_qr/views/qr_scanner.dart';
 
+// ignore: must_be_immutable
 class Settings extends StatefulWidget {
   
   Constantes constantes;
@@ -11,10 +12,10 @@ class Settings extends StatefulWidget {
   Settings({super.key, required this.constantes});
 
   @override
-  _SettingsState createState() => _SettingsState();
+  SettingsState createState() => SettingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class SettingsState extends State<Settings> {
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _portController = TextEditingController();
   bool _loading = true;
@@ -37,16 +38,16 @@ class _SettingsState extends State<Settings> {
             )
           : SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.all(24),
+            margin: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _header(context),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 _serverUriField(context),
-                SizedBox(height: 25),
+                const SizedBox(height: 25),
                 _portField(context),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 _saveButton(context),
               ],
             ),
@@ -62,6 +63,7 @@ class _SettingsState extends State<Settings> {
       AppSettings? appSettings = await widget.constantes.leerObjetoDesdeArchivo();
       if (appSettings != null) {
         _addressController.text = appSettings.address;
+        // ignore: unnecessary_null_comparison
         if (appSettings.port =="" || appSettings.port == null) {
           _portController.text = "8970";
           appSettings.port =_portController.text;
@@ -121,19 +123,19 @@ class _SettingsState extends State<Settings> {
     return TextField(
       decoration: InputDecoration(
         labelText: "URI del Servidor",
-        labelStyle: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+        labelStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
           borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
-          borderSide: BorderSide(color: Color.fromARGB(132, 0, 0, 0)),
+          borderSide: const BorderSide(color: Color.fromARGB(132, 0, 0, 0)),
         ),
-        fillColor: Color.fromARGB(255, 80, 80, 80).withOpacity(0.1),
+        fillColor: const Color.fromARGB(255, 80, 80, 80).withOpacity(0.1),
         filled: true,
       ),
-      cursorColor: Color.fromARGB(255, 0, 0, 0),
+      cursorColor: const Color.fromARGB(255, 0, 0, 0),
       controller: _addressController,
     );
   }
@@ -142,19 +144,19 @@ _portField(context) {
   return TextField(
     decoration: InputDecoration(
       labelText: "Puerto",
-      labelStyle: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+      labelStyle: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(18),
         borderSide: BorderSide.none,
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(18),
-        borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
+        borderSide: const BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
       ),
-      fillColor: Color.fromARGB(255, 80, 80, 80).withOpacity(0.1),
+      fillColor: const Color.fromARGB(255, 80, 80, 80).withOpacity(0.1),
       filled: true,
     ),
-    cursorColor: Color.fromARGB(255, 0, 0, 0),
+    cursorColor: const Color.fromARGB(255, 0, 0, 0),
     controller: _portController,
     keyboardType: TextInputType.number,
     inputFormatters: <TextInputFormatter>[
@@ -182,9 +184,9 @@ _portField(context) {
         );
       },
       style: ElevatedButton.styleFrom(
-        shape: StadiumBorder(),
-        padding: EdgeInsets.symmetric(vertical: 16),
-        backgroundColor: Color.fromARGB(255, 0, 0, 0),
+        shape: const StadiumBorder(),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       ),
       child: const Text(
         "Guardar",

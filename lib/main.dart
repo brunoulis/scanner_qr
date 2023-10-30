@@ -10,6 +10,7 @@ void main() async {
   // Obtenemos el directorio de documentos de la aplicación.
   final appDocumentsDirectory = await getApplicationDocumentsDirectory();
   // Obtenemos el directorio de soporte de la aplicación.
+  // ignore: unused_local_variable
   final appSupportDirectory = await getApplicationSupportDirectory();
   // Obtenemos la ruta del archivo de configuración.
   final filePath = '${appDocumentsDirectory.path}/settings.txt';

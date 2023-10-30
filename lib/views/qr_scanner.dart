@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:animations/animations.dart';
 import 'package:scanner_qr/controllers/constantes.dart';
 import 'package:scanner_qr/modelo/app_settings.dart';
 import 'package:scanner_qr/views/result_screen.dart';
@@ -30,14 +29,14 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   void initState() {
     if(mounted){
       super.initState();
-      WidgetsBinding.instance!.addObserver(this);
+      WidgetsBinding.instance.addObserver(this);
       _setDefaultValues();
     }
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
   _setDefaultValues() async {
@@ -140,7 +139,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
     Provider.of<ScannedDataModel>(context, listen: false).addScannedData(data);
     Navigator.of(context).push(
       PageRouteBuilder(
-        transitionDuration: Duration(milliseconds: 350),
+        transitionDuration:const  Duration(milliseconds: 350),
         pageBuilder: (context, animation, secondaryAnimation) =>
             ScaleTransition(
           scale: Tween<double>(
@@ -157,7 +156,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(44, 208, 255, 0),
+        backgroundColor: const  Color.fromARGB(44, 208, 255, 0),
         toolbarHeight: 35,
         elevation: 0,
          shape: const RoundedRectangleBorder(
@@ -193,34 +192,32 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
       ),
       body: Container(
         width: double.infinity,
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Expanded(
+            const Expanded(
               flex: 0,
-              child: Container(
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Pon el código de barras dentro del área de escaneo:",
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 14.5,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                      ),
+              child:  Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Pon el código de barras dentro del área de escaneo:",
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
                     ),
-                    SizedBox(height: 10.0),
-                    Text(
-                      "Lista de códigos escaneados:",
-                      style: TextStyle(
-                        fontSize: 12.9,
-                        color: Colors.black54,
-                      ),
+                  ),
+                  SizedBox(height: 10.0),
+                  Text(
+                    "Lista de códigos escaneados:",
+                    style: TextStyle(
+                      fontSize: 12.9,
+                      color: Colors.black54,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Expanded(
@@ -237,31 +234,29 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                 ),
               ),
             ),
-            Expanded(
+           const Expanded(
               flex: 0,
-              child: Container(
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Desarrollado por: Gistra.sl",
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                      ),
+              child:  Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Desarrollado por: Gistra.sl",
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             Align(
               alignment: Alignment.bottomRight,
               child: Container(
-                margin: EdgeInsets.all(16.0),
+                margin: const EdgeInsets.all(16.0),
                 child: FloatingActionButton(
-                  backgroundColor: Color.fromARGB(132, 234, 254, 143),
+                  backgroundColor: const Color.fromARGB(132, 234, 254, 143),
                   onPressed: () {
                     startBarcodeScan();
                   },
