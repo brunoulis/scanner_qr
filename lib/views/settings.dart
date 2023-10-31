@@ -106,7 +106,7 @@ class SettingsState extends State<Settings> {
   void _showSuccessSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(message,style:const TextStyle(fontWeight: FontWeight.w800)),
         backgroundColor: const Color.fromARGB(255, 65, 148, 68),
         duration: const Duration(seconds: 1),
       ),
@@ -115,7 +115,7 @@ class SettingsState extends State<Settings> {
   void _showCancelSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(message,style:const TextStyle(fontWeight: FontWeight.w800)),
         backgroundColor: const Color.fromARGB(255, 145, 14, 2),
         duration: const Duration(seconds: 1),
       ),

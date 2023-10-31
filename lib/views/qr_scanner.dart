@@ -40,7 +40,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
     super.dispose();
   }
   _setDefaultValues() async {
-    if(mounted){
+    
       bool existeArchivo = await widget.constantes.existFile();
       if (existeArchivo) {
         AppSettings? appSettings = await widget.constantes.leerObjetoDesdeArchivo();
@@ -55,7 +55,7 @@ class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
           _toSettings();
         });
       }
-    }
+    
   }
 
 

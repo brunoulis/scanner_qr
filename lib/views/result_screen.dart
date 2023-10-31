@@ -66,7 +66,7 @@ class ResultScreenState extends State<ResultScreen> {
         }
       }else{
         _showErrorDialog(tipo.descripcion);
-        _showErrorSnackbar("Vuelve a atrás y escanea de nuevo");
+        _showErrorSnackbar("Vuelve a atrás y escanea de nuevo",2);
         deleteElementList();
         if(mounted){
           setState(() {
@@ -79,7 +79,7 @@ class ResultScreenState extends State<ResultScreen> {
       
     }else{
       _showErrorDialog("No se pudo conectar con el servidor");
-      _showErrorSnackbar("Vuelve a atrás y escanea de nuevo");
+      _showErrorSnackbar("Vuelve a atrás y escanea de nuevo",1);
       deleteElementList();
       if(mounted){
         setState(() {
@@ -123,12 +123,12 @@ class ResultScreenState extends State<ResultScreen> {
     );
   }
 
-    void _showErrorSnackbar(String message) {
+  void _showErrorSnackbar(String message,int duracion) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(message),
+          content: Text(message,style:const TextStyle(fontWeight: FontWeight.w800)),
           backgroundColor: const Color.fromARGB(255, 155, 16, 16),
-          duration: const Duration(seconds: 2),
+          duration: Duration(seconds: duracion),
         ),
       );
   }
@@ -136,7 +136,7 @@ class ResultScreenState extends State<ResultScreen> {
   void _showSuccessSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Text(message,style:const TextStyle(fontWeight: FontWeight.w800)),
         backgroundColor: const Color.fromARGB(255, 65, 148, 68),
         duration: const Duration(seconds: 1),
       ),
