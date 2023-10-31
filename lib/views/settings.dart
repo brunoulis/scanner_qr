@@ -22,8 +22,11 @@ class SettingsState extends State<Settings> {
 
   @override
   void initState() {
-    super.initState();
-    _setDefaultValues();
+    if (mounted){
+      super.initState();
+      _setDefaultValues();
+    }
+
   }
 
   @override
@@ -71,24 +74,28 @@ class SettingsState extends State<Settings> {
   }
 
   _setDefaultValues() async {
-    bool existeArchivo = await widget.constantes.existFile();
-    if (existeArchivo) {
-      AppSettings? appSettings = await widget.constantes.leerObjetoDesdeArchivo();
-      if (appSettings != null) {
-        _addressController.text = appSettings.address;
-        // ignore: unnecessary_null_comparison
-        if (appSettings.port =="" || appSettings.port == null) {
-          _portController.text = "8970";
-          appSettings.port =_portController.text;
-        }else{
-          _portController.text = appSettings.port;
+    if (mounted) {
+      bool existeArchivo = await widget.constantes.existFile();
+      if (existeArchivo) {
+        AppSettings? appSettings = await widget.constantes.leerObjetoDesdeArchivo();
+        if (appSettings != null) {
+          _addressController.text = appSettings.address;
+          // ignore: unnecessary_null_comparison
+          if (appSettings.port =="" || appSettings.port == null) {
+            _portController.text = "8970";
+            appSettings.port =_portController.text;
+          }else{
+            _portController.text = appSettings.port;
+          }
+          // Guardamos las settings en constantes
+          widget.constantes.appSettings = appSettings;
         }
-        // Guardamos las settings en constantes
-        widget.constantes.appSettings = appSettings;
+      }else{
+        _portController.text = "8970";
       }
-    }else{
-      _portController.text = "8970";
+      
     }
+   
     if (mounted) {
       setState(() {
         _loading = false;
@@ -207,10 +214,10 @@ _portField(context) {
       },
       style: ElevatedButton.styleFrom(
         shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.circular(35.0),
+          borderRadius: BorderRadius.circular(45.0),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        backgroundColor: Color.fromARGB(255, 9, 9, 9),
+        padding: const EdgeInsets.symmetric(vertical: 13),
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
       ),
       child: const Text(
         "Guardar",
@@ -229,10 +236,10 @@ _portField(context) {
       },
       style: ElevatedButton.styleFrom(
         shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.circular(35.0),
+          borderRadius: BorderRadius.circular(45.0),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        backgroundColor: Color.fromARGB(207, 162, 15, 2),
+        padding: const EdgeInsets.symmetric(vertical: 13),
+        backgroundColor: const Color.fromARGB(207, 162, 15, 2),
       ),
       child: const Text(
         "Cancelar",
