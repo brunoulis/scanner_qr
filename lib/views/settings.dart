@@ -217,7 +217,7 @@ _portField(context) {
           borderRadius: BorderRadius.circular(45.0),
         ),
         padding: const EdgeInsets.symmetric(vertical: 13),
-        backgroundColor: Color.fromARGB(255, 0, 0, 0),
+        backgroundColor: Color.fromARGB(255, 57, 57, 57),
       ),
       child: const Text(
         "Guardar",
@@ -239,7 +239,7 @@ _portField(context) {
           borderRadius: BorderRadius.circular(45.0),
         ),
         padding: const EdgeInsets.symmetric(vertical: 13),
-        backgroundColor: const Color.fromARGB(207, 162, 15, 2),
+        backgroundColor: Color.fromARGB(207, 104, 17, 9),
       ),
       child: const Text(
         "Cancelar",
