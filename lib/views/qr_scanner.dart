@@ -18,10 +18,10 @@ class QRScanner extends StatefulWidget {
   const QRScanner({super.key,  required this.constantes});
 
   @override
-  _QRScannerState createState() => _QRScannerState();
+  QRScannerState createState() => QRScannerState();
 }
 
-class _QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
+class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   String scannedData = "";
   List<String> scannedResults = [];
 
