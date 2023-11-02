@@ -109,6 +109,10 @@ class SettingsState extends State<Settings> {
         content: Text(message,style:const TextStyle(fontWeight: FontWeight.w800)),
         backgroundColor: const Color.fromARGB(255, 65, 148, 68),
         duration: const Duration(seconds: 1),
+        animation: CurvedAnimation(
+          parent:const  AlwaysStoppedAnimation(1),
+          curve: Curves.bounceInOut,
+        )
       ),
     );
   }

@@ -26,6 +26,7 @@ class ResultScreenState extends State<ResultScreen> {
   // ignore: unused_field
   Tipo? _tipo;
   bool _loading = true;
+  bool _error = false;
 
 
   @override
@@ -62,6 +63,7 @@ class ResultScreenState extends State<ResultScreen> {
           setState(() {
             _tipo = tipo;
             _loading = false;
+            _error = false;
           });
         }
       }else{
@@ -72,6 +74,7 @@ class ResultScreenState extends State<ResultScreen> {
           setState(() {
             _tipo = null;
             _loading = false;
+            _error = true;
           });
         }
       }
@@ -85,6 +88,7 @@ class ResultScreenState extends State<ResultScreen> {
         setState(() {
           _tipo = null;
           _loading = false;
+          _error = true;
         });
       }
       
@@ -192,19 +196,38 @@ class ResultScreenState extends State<ResultScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                margin:const  EdgeInsets.only(bottom: 16),
-                child: BarcodeWidget(
-                  barcode: Barcode.code128(),
-                  data: widget.scannedData,
-                  width: 200,
-                  height: 80,
-                  style:const  TextStyle(fontSize: 12),
+              // Text() que mostrar si el escaneo fue exitoso o no
+              Flexible(
+                flex: 0,
+                child: _error
+                    ? const Text(
+                        'Error al escanear el código:',
+                        style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 187, 51, 41)),
+                      )
+                    : const Text(
+                        'Código escaneado con éxito:',
+                        style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 51, 117, 53)),
+                      ),
+              ),
+              Flexible(
+                flex: 2,
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: BarcodeWidget(
+                    barcode: Barcode.code128(),
+                    data: widget.scannedData,
+                    width: 250,
+                    height: 100,
+                    style: const TextStyle(fontSize: 12),
+                  ),
                 ),
               ),
-              Text(
-                'Código Escaneado: ${widget.scannedData}',
-                style: const TextStyle(fontSize: 18),
+              Flexible(
+                flex: 1,
+                child: Text(
+                  'Código Escaneado: ${widget.scannedData}',
+                  style: const TextStyle(fontSize: 18),
+                ),
               ),
             ],
           ),
