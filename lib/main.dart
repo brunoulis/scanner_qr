@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:scanner_qr/controllers/colors.dart';
 import 'package:scanner_qr/controllers/constantes.dart';
 import 'package:scanner_qr/views/qr_scanner.dart';
 import 'package:scanner_qr/modelo/scanned_data_model.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        primarySwatch: primary,
         appBarTheme: const AppBarTheme(
           backgroundColor: Color.fromARGB(0, 246, 28, 86),
           elevation: 0,
