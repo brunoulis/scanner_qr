@@ -221,7 +221,7 @@ _portField(context) {
       ),
       child: const Text(
         "Guardar",
-        style: TextStyle(fontSize: 20),
+        style: TextStyle(fontSize: 20, color: Colors.white),
       ),
     );
   }
@@ -243,7 +243,7 @@ _portField(context) {
       ),
       child: const Text(
         "Cancelar",
-        style: TextStyle(fontSize: 20),
+        style: TextStyle(fontSize: 20, color: Colors.white),
       ),
     );
   }

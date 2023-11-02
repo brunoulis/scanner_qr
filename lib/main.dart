@@ -22,6 +22,9 @@ void main() async {
       ChangeNotifierProvider(
         create: (context) => ScannedDataModel(),
         child: MaterialApp(
+          theme: ThemeData(
+            primarySwatch: primary,
+          ),
           home: QRScanner(constantes: constantes,),
         ),
       ),
