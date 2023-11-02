@@ -196,7 +196,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
         child: Column(
           children: [
             const Expanded(
-              flex: 0,
+              flex: 1,
               child:  Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -204,8 +204,8 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                     "Pon el código de barras dentro del área de escaneo:",
                     style: TextStyle(
                       color: Colors.black87,
-                      fontSize: 14.5,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 13.2,
+                      fontWeight: FontWeight.w900,
                       letterSpacing: 1,
                     ),
                   ),
@@ -213,7 +213,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                   Text(
                     "Lista de códigos escaneados:",
                     style: TextStyle(
-                      fontSize: 12.9,
+                      fontSize: 12.5,
                       color: Colors.black54,
                     ),
                   ),
@@ -221,6 +221,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
               ),
             ),
             Expanded(
+              flex: 6,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -235,7 +236,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
               ),
             ),
            const Expanded(
-              flex: 0,
+              flex: 1,
               child:  Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
