@@ -9,17 +9,15 @@ import 'package:scanner_qr/modelo/scanned_data_model.dart';
 import 'package:scanner_qr/modelo/tipo.dart';
 import 'package:provider/provider.dart';
 
-
 class ResultScreen extends StatefulWidget {
   final String scannedData;
   final Constantes constantes;
 
-  const ResultScreen({super.key, required this.constantes,required this.scannedData});
+  const ResultScreen(
+      {super.key, required this.constantes, required this.scannedData});
 
   @override
   ResultScreenState createState() => ResultScreenState();
-
-
 }
 
 class ResultScreenState extends State<ResultScreen> {
@@ -27,14 +25,13 @@ class ResultScreenState extends State<ResultScreen> {
   Tipo? _tipo;
   bool _loading = true;
   bool _error = false;
-  
+
   IconData iconError = Icons.error_outline;
   IconData iconSuccess = Icons.check_circle_outline;
 
-
   @override
   void initState() {
-    if(mounted){
+    if (mounted) {
       super.initState();
       sendData();
     }
@@ -46,34 +43,39 @@ class ResultScreenState extends State<ResultScreen> {
     ConnectionController.closeConnection();
   }
 
-  void deleteElementList(){
-    // Buscamos el dato en la lista de datos escaneados y lo eliminamos  
-      int index = Provider.of<ScannedDataModel>(context, listen: false).scannedResults.indexOf(widget.scannedData);
-      if (index != -1) {
-      Provider.of<ScannedDataModel>(context, listen: false).deleteScannedData(index);
-      }
+  void deleteElementList() {
+    // Buscamos el dato en la lista de datos escaneados y lo eliminamos
+    int index = Provider.of<ScannedDataModel>(context, listen: false)
+        .scannedResults
+        .indexOf(widget.scannedData);
+    if (index != -1) {
+      Provider.of<ScannedDataModel>(context, listen: false)
+          .deleteScannedData(index);
+    }
   }
 
-
   void sendData() async {
-    Tipo? tipo = await ConnectionController.sendaDataWithio(widget.scannedData,widget.constantes.appSettings!.address, int.parse(widget.constantes.appSettings!.port));
+    Tipo? tipo = await ConnectionController.sendaDataWithio(
+        widget.scannedData,
+        widget.constantes.appSettings!.address,
+        int.parse(widget.constantes.appSettings!.port));
     if (tipo != null) {
       // Haz algo con el objeto tipo
-      if(tipo.error==0){
+      if (tipo.error == 0) {
         //print("Esta es la descripcion"+tipo.descripcion);
         _showSuccessSnackbar(tipo.descripcion);
-        if(mounted){
+        if (mounted) {
           setState(() {
             _tipo = tipo;
             _loading = false;
             _error = false;
           });
         }
-      }else{
+      } else {
         _showErrorDialog(tipo.descripcion);
-        _showErrorSnackbar("Vuelve a atrás y escanea de nuevo",2);
+        _showErrorSnackbar("Vuelve a atrás y escanea de nuevo", 2);
         deleteElementList();
-        if(mounted){
+        if (mounted) {
           setState(() {
             _tipo = null;
             _loading = false;
@@ -81,36 +83,28 @@ class ResultScreenState extends State<ResultScreen> {
           });
         }
       }
-
-      
-    }else{
+    } else {
       _showErrorDialog("No se pudo conectar con el servidor");
-      _showErrorSnackbar("Vuelve a atrás y escanea de nuevo",1);
+      _showErrorSnackbar("Vuelve a atrás y escanea de nuevo", 1);
       deleteElementList();
-      if(mounted){
+      if (mounted) {
         setState(() {
           _tipo = null;
           _loading = false;
           _error = true;
         });
       }
-      
     }
-
   }
-  
 
-   // Agrega esta función para mostrar el diálogo
+  // Agrega esta función para mostrar el diálogo
   void _showErrorDialog(String error) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: const Text('Error',
-          style: TextStyle(
-            fontWeight: FontWeight.w800
-           )
-          ),
+              style: TextStyle(fontWeight: FontWeight.w800)),
           content: Text(error),
           actions: [
             TextButton(
@@ -118,11 +112,9 @@ class ResultScreenState extends State<ResultScreen> {
                 Navigator.of(context).pop();
               },
               child: const Text("Volver",
-                style: TextStyle(
-                color: Color.fromARGB(255, 0, 0, 0),
-                fontWeight: FontWeight.w800
-                            )
-              ),
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      fontWeight: FontWeight.w800)),
             ),
           ],
         );
@@ -130,20 +122,22 @@ class ResultScreenState extends State<ResultScreen> {
     );
   }
 
-  void _showErrorSnackbar(String message,int duracion) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message,style:const TextStyle(fontWeight: FontWeight.w800)),
-          backgroundColor: const Color.fromARGB(255, 155, 16, 16),
-          duration: Duration(seconds: duracion),
-        ),
-      );
+  void _showErrorSnackbar(String message, int duracion) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content:
+            Text(message, style: const TextStyle(fontWeight: FontWeight.w800)),
+        backgroundColor: const Color.fromARGB(255, 155, 16, 16),
+        duration: Duration(seconds: duracion),
+      ),
+    );
   }
 
   void _showSuccessSnackbar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message,style:const TextStyle(fontWeight: FontWeight.w800)),
+        content:
+            Text(message, style: const TextStyle(fontWeight: FontWeight.w800)),
         backgroundColor: const Color.fromARGB(255, 65, 148, 68),
         duration: const Duration(seconds: 1),
       ),
@@ -158,23 +152,78 @@ class ResultScreenState extends State<ResultScreen> {
     }
   }
 
+  Widget _buildState() {
+    return Flexible(
+      flex: 1,
+      child: _error
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  iconError,
+                  color: const Color.fromARGB(255, 187, 51, 41),
+                ),
+                const Text(
+                  'Error al escanear el código',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 187, 51, 41)),
+                ),
+              ],
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  iconSuccess,
+                  color: const Color.fromARGB(255, 51, 117, 53),
+                ),
+                const Text(
+                  'Código escaneado con éxito',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 51, 117, 53)),
+                ),
+              ],
+            ),
+    );
+  }
+
+  Widget _buildScannedData() {
+    return Flexible(
+      flex: 2,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        child: BarcodeWidget(
+          barcode: Barcode.code128(),
+          data: widget.scannedData,
+          width: 250,
+          height: 100,
+          style: const TextStyle(fontSize: 12),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: const Color.fromARGB(44, 208, 255, 0),
         toolbarHeight: 40,
         elevation: 0,
-         shape: const RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(25),
             bottomRight: Radius.circular(25),
           ),
         ),
         centerTitle: true,
-        title: const Text('Resultado del Escaneo',
-        style: TextStyle(
+        title: const Text(
+          'Resultado del Escaneo',
+          style: TextStyle(
             color: Colors.black87,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -182,64 +231,35 @@ class ResultScreenState extends State<ResultScreen> {
           ),
         ),
         leading: IconButton(
-          icon:  isIOS()
-                ? const Icon(CupertinoIcons.back,color: Colors.black,)
-                : const Icon(Icons.arrow_back,color: Colors.black,),
+          icon: isIOS()
+              ? const Icon(
+                  CupertinoIcons.back,
+                  color: Colors.black,
+                )
+              : const Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body:
-         _loading
+      body: _loading
           ? const Center(
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 0, 0, 0)),
+                valueColor:
+                    AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 0, 0, 0)),
               ),
             )
-        : Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Text() que mostrar si el escaneo fue exitoso o no
-              Flexible(
-                flex: 1,
-                child: _error
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(iconError,color: const Color.fromARGB(255, 187, 51, 41),),
-                          const Text(
-                            'Error al escanear el código',
-                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 187, 51, 41)),
-                          ),
-                        ],
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(iconSuccess,color: const Color.fromARGB(255, 51, 117, 53),),
-                          const Text(
-                            'Código escaneado con éxito',
-                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 51, 117, 53)),
-                          ),
-                        ],
-                      ),
+          : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Text() que mostrar si el escaneo fue exitoso o no
+                  _buildState(),
+                  _buildScannedData()
+                ],
               ),
-              Flexible(
-                flex: 2,
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  child: BarcodeWidget(
-                    barcode: Barcode.code128(),
-                    data: widget.scannedData,
-                    width: 250,
-                    height: 100,
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
     );
   }
 }
