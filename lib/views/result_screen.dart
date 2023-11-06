@@ -206,7 +206,7 @@ class ResultScreenState extends State<ResultScreen> {
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(iconError,color: Color.fromARGB(255, 187, 51, 41),),
+                          Icon(iconError,color: const Color.fromARGB(255, 187, 51, 41),),
                           const Text(
                             'Error al escanear el código',
                             style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 187, 51, 41)),
@@ -216,7 +216,7 @@ class ResultScreenState extends State<ResultScreen> {
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(iconSuccess,color: Color.fromARGB(255, 51, 117, 53),),
+                          Icon(iconSuccess,color: const Color.fromARGB(255, 51, 117, 53),),
                           const Text(
                             'Código escaneado con éxito',
                             style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 51, 117, 53)),
