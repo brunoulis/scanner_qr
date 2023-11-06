@@ -27,6 +27,9 @@ class ResultScreenState extends State<ResultScreen> {
   Tipo? _tipo;
   bool _loading = true;
   bool _error = false;
+  
+  IconData iconError = Icons.error_outline;
+  IconData iconSuccess = Icons.check_circle_outline;
 
 
   @override
@@ -198,15 +201,27 @@ class ResultScreenState extends State<ResultScreen> {
             children: [
               // Text() que mostrar si el escaneo fue exitoso o no
               Flexible(
-                flex: 0,
+                flex: 1,
                 child: _error
-                    ? const Text(
-                        'Error al escanear el código:',
-                        style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 187, 51, 41)),
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(iconError,color: Color.fromARGB(255, 187, 51, 41),),
+                          const Text(
+                            'Error al escanear el código',
+                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 187, 51, 41)),
+                          ),
+                        ],
                       )
-                    : const Text(
-                        'Código escaneado con éxito:',
-                        style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 51, 117, 53)),
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(iconSuccess,color: Color.fromARGB(255, 51, 117, 53),),
+                          const Text(
+                            'Código escaneado con éxito',
+                            style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Color.fromARGB(255, 51, 117, 53)),
+                          ),
+                        ],
                       ),
               ),
               Flexible(
@@ -220,13 +235,6 @@ class ResultScreenState extends State<ResultScreen> {
                     height: 100,
                     style: const TextStyle(fontSize: 12),
                   ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: Text(
-                  'Código Escaneado: ${widget.scannedData}',
-                  style: const TextStyle(fontSize: 18),
                 ),
               ),
             ],
