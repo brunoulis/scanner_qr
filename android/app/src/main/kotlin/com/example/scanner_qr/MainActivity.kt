@@ -1,4 +1,4 @@
-package com.example.scanner_qr
+package es.gistra.scanner_qr
 
 import io.flutter.embedding.android.FlutterActivity
 

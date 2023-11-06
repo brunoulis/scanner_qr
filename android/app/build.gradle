@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.scanner_qr"
+    namespace "es.gistra.scanner_qr"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
