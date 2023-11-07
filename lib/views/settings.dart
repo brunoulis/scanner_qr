@@ -77,17 +77,13 @@ class SettingsState extends State<Settings> {
     }
   }
 
-
   void _showErrorDialog(String error) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: const Text('Error',
-          style: TextStyle(
-            fontWeight: FontWeight.w800
-           )
-          ),
+              style: TextStyle(fontWeight: FontWeight.w800)),
           content: Text(error),
           actions: [
             TextButton(
@@ -95,11 +91,9 @@ class SettingsState extends State<Settings> {
                 Navigator.of(context).pop();
               },
               child: const Text("Volver",
-                style: TextStyle(
-                color: Color.fromARGB(255, 145, 14, 2),
-                fontWeight: FontWeight.w800
-                            )
-              ),
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 145, 14, 2),
+                      fontWeight: FontWeight.w800)),
             ),
           ],
         );
@@ -111,6 +105,13 @@ class SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Center(
+          child: Text(
+            "Scanner QR",
+            style: TextStyle(
+                color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.w800),
+          ),
+        ),
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
@@ -126,14 +127,15 @@ class SettingsState extends State<Settings> {
                         )),
               );
             },
-            icon:isIOS()? const Icon(
-              CupertinoIcons.qrcode,
-              color: Color.fromARGB(255, 0, 0, 0),
-            ) : const Icon(
-              Icons.qr_code_2,
-              color: Color.fromARGB(255, 0, 0, 0),
-            )
-            ),
+            icon: isIOS()
+                ? const Icon(
+                    CupertinoIcons.qrcode,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  )
+                : const Icon(
+                    Icons.qr_code_2,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  )),
         actions: [
           IconButton(
             onPressed: () {
