@@ -59,7 +59,7 @@ class SettingsState extends State<Settings> {
         "#FF0000", // Color personalizado para el botón de escaneo
         "Cancelar", // Texto del botón de cancelar
         true, // Mostrar luz de flash
-        ScanMode.BARCODE, // Modo de escaneo (código de barras)
+        ScanMode.QR, // Modo de escaneo (código de barras)
       );
 
       if (barcodeScanResult != '-1') {
@@ -404,3 +404,5 @@ class SettingsState extends State<Settings> {
     );
   }
 }
+
+
