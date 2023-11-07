@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:scanner_qr/controllers/constantes.dart';
 import 'package:scanner_qr/modelo/app_settings.dart';
 import 'package:scanner_qr/views/qr_scanner.dart';
-import 'package:scanner_qr/views/settings/qr_settings.dart';
+import 'package:scanner_qr/views/qr_settings.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 // ignore: must_be_immutable

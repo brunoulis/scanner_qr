@@ -1,5 +1,8 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:scanner_qr/controllers/constantes.dart';
@@ -13,6 +16,14 @@ class QrSettings extends StatefulWidget {
 
   @override
   QrSettingsState createState() => QrSettingsState();
+}
+
+bool isIOS() {
+  if (Platform.isIOS) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 class QrSettingsState extends State<QrSettings> {
@@ -33,10 +44,15 @@ class QrSettingsState extends State<QrSettings> {
                               constantes: widget.constantes,
                             )));
               },
-              icon: const Icon(
+              icon: isIOS() ?const Icon(
+                CupertinoIcons.back,
+                color: Color.fromARGB(255, 0, 0, 0),
+              ): const Icon(
                 Icons.arrow_back,
                 color: Color.fromARGB(255, 0, 0, 0),
-              ))),
+              ),
+          ),
+      ),
       body: Center(
         child: QrImageView(
           data: widget.data,
