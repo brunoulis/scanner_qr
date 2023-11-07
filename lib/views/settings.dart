@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scanner_qr/controllers/constantes.dart';
 import 'package:scanner_qr/modelo/app_settings.dart';
-import 'package:scanner_qr/modelo/encrypt_string.dart';
+import 'package:scanner_qr/controllers/encrypt_string.dart';
 import 'package:scanner_qr/views/qr_scanner.dart';
 import 'package:scanner_qr/views/qr_settings.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
