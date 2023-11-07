@@ -66,6 +66,7 @@ class SettingsState extends State<Settings> {
         if (result.length == 2) {
           _addressController.text = result[0];
           _portController.text = result[1];
+          _showSuccessSnackbar("Código escaneado correctamente");
         } else {
           _showErrorDialog("El código no es válido");
         }
