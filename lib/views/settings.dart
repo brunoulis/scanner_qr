@@ -114,7 +114,7 @@ class SettingsState extends State<Settings> {
       appBar: AppBar(
         title: const Center(
           child: Text(
-            "Scanner QR",
+            "BARD VISION",
             style: TextStyle(
                 color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.w800),
           ),

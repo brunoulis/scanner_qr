@@ -163,9 +163,9 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
           'BARD VISION',
           style: TextStyle(
             color: Colors.black87,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w900,
             letterSpacing: 1,
+            fontFamily: 'Arial',
           ),
         ),
         leading: IconButton(
