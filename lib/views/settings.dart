@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -210,7 +212,6 @@ class SettingsState extends State<Settings> {
             await widget.constantes.leerObjetoDesdeArchivo();
         if (appSettings != null) {
           _addressController.text = appSettings.address;
-          // ignore: unnecessary_null_comparison
           if (appSettings.port == "" || appSettings.port == null) {
             _portController.text = "8970";
             appSettings.port = _portController.text;
