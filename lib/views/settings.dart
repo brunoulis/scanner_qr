@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:scanner_qr/controllers/constantes.dart';
 import 'package:scanner_qr/modelo/app_settings.dart';
+import 'package:scanner_qr/modelo/encrypt_string.dart';
 import 'package:scanner_qr/views/qr_scanner.dart';
 import 'package:scanner_qr/views/qr_settings.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -27,6 +28,7 @@ class SettingsState extends State<Settings> {
   bool _loading = true;
   String scannedData = "";
   List<String> scannedResults = [];
+  EncryptString encryptString = EncryptString();
 
   @override
   void initState() {
@@ -64,8 +66,10 @@ class SettingsState extends State<Settings> {
         //Verificamos que el resultado sea ip:puerto
         List<String> result = barcodeScanResult.split(":");
         if (result.length == 2) {
-          _addressController.text = result[0];
-          _portController.text = result[1];
+          _addressController.text = encryptString.desencryptar(result[0]);
+          _portController.text = encryptString.desencryptar(result[1]);
+          //_addressController.text = result[0];
+          //_portController.text = result[1];
           _showSuccessSnackbar("Código escaneado correctamente");
         } else {
           _showErrorDialog("El código no es válido");
@@ -136,12 +140,14 @@ class SettingsState extends State<Settings> {
                 _showCancelSnackbar("La dirección no puede estar vacía");
                 return;
               }
+              String encryptedAddress = encryptString.encryptar(_addressController.text);
+              String encryptedPort = encryptString.encryptar(_portController.text);
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => QrSettings(
                           data:
-                              "${widget.constantes.appSettings!.address}:${widget.constantes.appSettings!.port}",
+                              "$encryptedAddress:$encryptedPort",
                           constantes: widget.constantes,
                         )),
               );
