@@ -160,7 +160,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
         ),
         centerTitle: true,
         title: const Text(
-          'Scanner de Códigos',
+          'BARD VISION',
           style: TextStyle(
             color: Colors.black87,
             fontSize: 18.0,
