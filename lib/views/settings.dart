@@ -208,8 +208,19 @@ _portField(context) {
           address: _addressController.text,
           port: _portController.text,
         );
-        widget.constantes.guardarSettingsEnArchivo(appSettings);
-        widget.constantes.appSettings = appSettings;
+        if (appSettings.port == "") {
+          appSettings.port = "8970";
+          _showCancelSnackbar("El puerto no puede estar vacío");
+          return;
+        }else if (appSettings.address == "") {
+          _showCancelSnackbar("La dirección no puede estar vacía");
+          return;
+        }else{
+          widget.constantes.guardarSettingsEnArchivo(appSettings);
+          widget.constantes.appSettings = appSettings;
+        }
+
+        
         _showSuccessSnackbar("Configuración guardada");
         Navigator.pushReplacement(
           context,
