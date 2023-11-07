@@ -43,6 +43,7 @@ dependencies:
   web_socket_client: ^0.1.0
   barcode_widget: ^2.0.4
   path_provider: ^2.1.1
+  qr_flutter: ^4.1.0
 
   
 
