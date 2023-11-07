@@ -209,7 +209,7 @@ _portField(context) {
           port: _portController.text,
         );
         if (appSettings.port == "") {
-          appSettings.port = "8970";
+          _portController.text = "8970";
           _showCancelSnackbar("El puerto no puede estar vacío");
           return;
         }else if (appSettings.address == "") {
