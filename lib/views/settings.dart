@@ -124,6 +124,15 @@ class SettingsState extends State<Settings> {
         leading: IconButton(
             onPressed: () {
               // Pasamos a la pantalla de qr_settings
+              if(_portController.text == ""|| _portController.text == null) {
+                _portController.text = "8970";
+                _showCancelSnackbar("El puerto no puede estar vacío");
+                return;
+              }
+              if(_addressController.text == ""|| _addressController.text == null) {
+                _showCancelSnackbar("La dirección no puede estar vacía");
+                return;
+              }
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
