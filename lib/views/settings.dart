@@ -112,8 +112,15 @@ class SettingsState extends State<Settings> {
                 color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.w800),
           ),
         ),
+        backgroundColor: const Color.fromARGB(44, 208, 255, 0),
+        toolbarHeight: 35,
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(25),
+            bottomRight: Radius.circular(25),
+          ),
+        ),
         leading: IconButton(
             onPressed: () {
               // Pasamos a la pantalla de qr_settings

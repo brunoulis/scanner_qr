@@ -32,26 +32,35 @@ class QrSettingsState extends State<QrSettings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: const Text('Código QR'),
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Settings(
-                              constantes: widget.constantes,
-                            )));
-              },
-              icon: isIOS() ?const Icon(
-                CupertinoIcons.back,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ): const Icon(
-                Icons.arrow_back,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
+        backgroundColor: const Color.fromARGB(44, 208, 255, 0),
+        toolbarHeight: 35,
+        elevation: 0,
+        title: const Text('Código QR'),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(25),
+            bottomRight: Radius.circular(25),
           ),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Settings(
+                          constantes: widget.constantes,
+                        )));
+          },
+          icon: isIOS()
+              ? const Icon(
+                  CupertinoIcons.back,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                )
+              : const Icon(
+                  Icons.arrow_back,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
+        ),
       ),
       body: Center(
         child: QrImageView(

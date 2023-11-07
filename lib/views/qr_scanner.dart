@@ -11,11 +11,10 @@ import 'package:scanner_qr/modelo/scanned_data_model.dart';
 import 'package:provider/provider.dart';
 import 'package:scanner_qr/views/settings.dart';
 
-
 class QRScanner extends StatefulWidget {
   final Constantes constantes;
-  
-  const QRScanner({super.key,  required this.constantes});
+
+  const QRScanner({super.key, required this.constantes});
 
   @override
   QRScannerState createState() => QRScannerState();
@@ -27,7 +26,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    if(mounted){
+    if (mounted) {
       super.initState();
       WidgetsBinding.instance.addObserver(this);
       _setDefaultValues();
@@ -39,31 +38,32 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
-  _setDefaultValues() async {
-    
-      bool existeArchivo = await widget.constantes.existFile();
-      if (existeArchivo) {
-        AppSettings? appSettings = await widget.constantes.leerObjetoDesdeArchivo();
-        if (appSettings != null) {
-          widget.constantes.appSettings = appSettings;
-        }
-      }else{
-        // Abrimos la pantalla de configuración
-        _showErrorDialog("No se ha encontrado el archivo de configuración");
-        //dar un delay de dos segundos
-        Future.delayed(const Duration(seconds: 2), () {
-          _toSettings();
-        });
-      }
-    
-  }
 
+  _setDefaultValues() async {
+    bool existeArchivo = await widget.constantes.existFile();
+    if (existeArchivo) {
+      AppSettings? appSettings =
+          await widget.constantes.leerObjetoDesdeArchivo();
+      if (appSettings != null) {
+        widget.constantes.appSettings = appSettings;
+      }
+    } else {
+      // Abrimos la pantalla de configuración
+      _showErrorDialog("No se ha encontrado el archivo de configuración");
+      //dar un delay de dos segundos
+      Future.delayed(const Duration(seconds: 2), () {
+        _toSettings();
+      });
+    }
+  }
 
   void _toSettings() {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Settings(constantes: widget.constantes,),
+        builder: (context) => Settings(
+          constantes: widget.constantes,
+        ),
       ),
     );
   }
@@ -76,35 +76,32 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   }
 
   void startBarcodeScan() async {
-    try{
-    String barcodeScanResult = await FlutterBarcodeScanner.scanBarcode(
-      "#FF0000", // Color personalizado para el botón de escaneo
-      "Cancelar", // Texto del botón de cancelar
-      true, // Mostrar luz de flash
-      ScanMode.BARCODE, // Modo de escaneo (código de barras)
-    );
+    try {
+      String barcodeScanResult = await FlutterBarcodeScanner.scanBarcode(
+        "#FF0000", // Color personalizado para el botón de escaneo
+        "Cancelar", // Texto del botón de cancelar
+        true, // Mostrar luz de flash
+        ScanMode.BARCODE, // Modo de escaneo (código de barras)
+      );
 
-    if (barcodeScanResult != '-1') {
-      navigateToSecondScreen(barcodeScanResult);
-    }
-    }on PlatformException{
+      if (barcodeScanResult != '-1') {
+        navigateToSecondScreen(barcodeScanResult);
+      }
+    } on PlatformException {
       _showErrorDialog("Error al escanear el código");
-    }catch(e){
+    } catch (e) {
       _showErrorDialog("Error desconocido $e");
     }
   }
 
-   // Agrega esta función para mostrar el diálogo
+  // Agrega esta función para mostrar el diálogo
   void _showErrorDialog(String error) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: const Text('Error',
-          style: TextStyle(
-            fontWeight: FontWeight.w800
-           )
-          ),
+              style: TextStyle(fontWeight: FontWeight.w800)),
           content: Text(error),
           actions: [
             TextButton(
@@ -112,11 +109,9 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                 Navigator.of(context).pop();
               },
               child: const Text("Volver",
-                style: TextStyle(
-                color: Color.fromARGB(255, 145, 14, 2),
-                fontWeight: FontWeight.w800
-                            )
-              ),
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 145, 14, 2),
+                      fontWeight: FontWeight.w800)),
             ),
           ],
         );
@@ -124,29 +119,27 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
     );
   }
 
-
   // Funcion que servira par detectar el sistema operativo y mostrar el icono correspondiente
-   bool isIOS() {
+  bool isIOS() {
     if (Platform.isIOS) {
       return true;
     } else {
       return false;
     }
-   }
-
+  }
 
   void navigateToSecondScreen(String data) {
     Provider.of<ScannedDataModel>(context, listen: false).addScannedData(data);
     Navigator.of(context).push(
       PageRouteBuilder(
-        transitionDuration:const  Duration(milliseconds: 350),
+        transitionDuration: const Duration(milliseconds: 350),
         pageBuilder: (context, animation, secondaryAnimation) =>
             ScaleTransition(
           scale: Tween<double>(
             begin: 0.0,
             end: 1.0,
           ).animate(animation),
-          child: ResultScreen(constantes: widget.constantes,scannedData: data),
+          child: ResultScreen(constantes: widget.constantes, scannedData: data),
         ),
       ),
     );
@@ -156,10 +149,10 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const  Color.fromARGB(44, 208, 255, 0),
+        backgroundColor: const Color.fromARGB(44, 208, 255, 0),
         toolbarHeight: 35,
         elevation: 0,
-         shape: const RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(25),
             bottomRight: Radius.circular(25),
@@ -176,15 +169,18 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
           ),
         ),
         leading: IconButton(
-          icon:  isIOS()
-          ? const Icon(CupertinoIcons.settings_solid, color: Color.fromARGB(255, 0, 0, 0))
-          : const Icon(Icons.settings, color: Color.fromARGB(255, 0, 0, 0)),
+          icon: isIOS()
+              ? const Icon(CupertinoIcons.settings_solid,
+                  color: Color.fromARGB(255, 0, 0, 0))
+              : const Icon(Icons.settings, color: Color.fromARGB(255, 0, 0, 0)),
           onPressed: () {
             // Navega a la pestaña de configuración
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Settings(constantes: widget.constantes,),
+                builder: (context) => Settings(
+                  constantes: widget.constantes,
+                ),
               ),
             );
           },
@@ -197,7 +193,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
           children: [
             const Expanded(
               flex: 1,
-              child:  Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -225,7 +221,8 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    for (var result in Provider.of<ScannedDataModel>(context).scannedResults)
+                    for (var result in Provider.of<ScannedDataModel>(context)
+                        .scannedResults)
                       Card(
                         child: ListTile(
                           title: Text(result),
@@ -235,9 +232,9 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                 ),
               ),
             ),
-           const Expanded(
+            const Expanded(
               flex: 1,
-              child:  Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -262,8 +259,10 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                     startBarcodeScan();
                   },
                   child: isIOS()
-                      ? const Icon(CupertinoIcons.photo_camera_solid, color: Color.fromARGB(255, 0, 0, 0))
-                      : const Icon(Icons.camera_alt, color: Color.fromARGB(255, 0, 0, 0)),
+                      ? const Icon(CupertinoIcons.photo_camera_solid,
+                          color: Color.fromARGB(255, 0, 0, 0))
+                      : const Icon(Icons.camera_alt,
+                          color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
             ),
