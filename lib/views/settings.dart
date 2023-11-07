@@ -75,7 +75,7 @@ class SettingsState extends State<Settings> {
           _showErrorDialog("El código no es válido");
         }
       } else {
-        _showErrorDialog("No se ha podido escanear el código");
+        _showCancelSnackbar("No se escaneó ningún código");
       }
     } on PlatformException {
       _showErrorDialog("Error al escanear el código");
