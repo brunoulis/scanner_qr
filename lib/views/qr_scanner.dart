@@ -145,127 +145,149 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
     );
   }
 
+  // Funciones para construir la interfaz de usuario en la parte superior
+  Widget _buildHead(String firstText, String secondText) {
+    return Expanded(
+      flex: 1,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            firstText,
+            style: const TextStyle(
+              color: Colors.black87,
+              fontSize: 13.2,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 1,
+            ),
+          ),
+          const SizedBox(height: 10.0),
+          Text(
+            secondText,
+            style: const TextStyle(
+              fontSize: 12.5,
+              color: Colors.black54,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildList() {
+    return Expanded(
+      flex: 6,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            for (var result
+                in Provider.of<ScannedDataModel>(context).scannedResults)
+              Card(
+                child: ListTile(
+                  title: Text(result),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTail(String text) {
+    return Expanded(
+      flex: 1,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            text,
+            style: const TextStyle(
+              color: Colors.black54,
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  PreferredSizeWidget buildAppbar(String title, BuildContext context) {
+    return AppBar(
+      backgroundColor: const Color.fromARGB(44, 208, 255, 0),
+      toolbarHeight: 35,
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(25),
+          bottomRight: Radius.circular(25),
+        ),
+      ),
+      centerTitle: true,
+      title: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.black87,
+          fontWeight: FontWeight.w900,
+          letterSpacing: 1,
+          fontFamily: 'Arial',
+        ),
+      ),
+      leading: IconButton(
+        icon: isIOS()
+            ? const Icon(CupertinoIcons.settings_solid,
+                color: Color.fromARGB(255, 0, 0, 0))
+            : const Icon(Icons.settings, color: Color.fromARGB(255, 0, 0, 0)),
+        onPressed: () {
+          // Navega a la pestaña de configuración
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Settings(
+                constantes: widget.constantes,
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildCameraIcon() {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Container(
+        margin: const EdgeInsets.all(16.0),
+        child: FloatingActionButton(
+          backgroundColor: const Color.fromARGB(132, 234, 254, 143),
+          onPressed: () {
+            startBarcodeScan();
+          },
+          child: isIOS()
+              ? const Icon(CupertinoIcons.photo_camera_solid,
+                  color: Color.fromARGB(255, 0, 0, 0))
+              : const Icon(Icons.camera_alt,
+                  color: Color.fromARGB(255, 0, 0, 0)),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(44, 208, 255, 0),
-        toolbarHeight: 35,
-        elevation: 0,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25),
-            bottomRight: Radius.circular(25),
-          ),
-        ),
-        centerTitle: true,
-        title: const Text(
-          'BARD VISION',
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.w900,
-            letterSpacing: 1,
-            fontFamily: 'Arial',
-          ),
-        ),
-        leading: IconButton(
-          icon: isIOS()
-              ? const Icon(CupertinoIcons.settings_solid,
-                  color: Color.fromARGB(255, 0, 0, 0))
-              : const Icon(Icons.settings, color: Color.fromARGB(255, 0, 0, 0)),
-          onPressed: () {
-            // Navega a la pestaña de configuración
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Settings(
-                  constantes: widget.constantes,
-                ),
-              ),
-            );
-          },
-        ),
-      ),
+      appBar: buildAppbar("BARD VISION", context),
       body: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            const Expanded(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Pon el código de barras dentro del área de escaneo:",
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 13.2,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                  SizedBox(height: 10.0),
-                  Text(
-                    "Lista de códigos escaneados:",
-                    style: TextStyle(
-                      fontSize: 12.5,
-                      color: Colors.black54,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 6,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    for (var result in Provider.of<ScannedDataModel>(context)
-                        .scannedResults)
-                      Card(
-                        child: ListTile(
-                          title: Text(result),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-            const Expanded(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Desarrollado por: Gistra.sl",
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                margin: const EdgeInsets.all(16.0),
-                child: FloatingActionButton(
-                  backgroundColor: const Color.fromARGB(132, 234, 254, 143),
-                  onPressed: () {
-                    startBarcodeScan();
-                  },
-                  child: isIOS()
-                      ? const Icon(CupertinoIcons.photo_camera_solid,
-                          color: Color.fromARGB(255, 0, 0, 0))
-                      : const Icon(Icons.camera_alt,
-                          color: Color.fromARGB(255, 0, 0, 0)),
-                ),
-              ),
-            ),
+            _buildHead("Pon el código de barras dentro del área de escaneo:",
+                "Lista de códigos escaneados:"),
+            _buildList(),
+            _buildTail("Desarrollado por: Gistra.sl"),
+            _buildCameraIcon(),
           ],
         ),
       ),
