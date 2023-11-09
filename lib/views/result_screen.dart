@@ -206,11 +206,8 @@ class ResultScreenState extends State<ResultScreen> {
       ),
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+  PreferredSizeWidget _buildAppbar(String title){
+    return AppBar(
         backgroundColor: const Color.fromARGB(44, 208, 255, 0),
         toolbarHeight: 40,
         elevation: 0,
@@ -221,9 +218,9 @@ class ResultScreenState extends State<ResultScreen> {
           ),
         ),
         centerTitle: true,
-        title: const Text(
-          'Resultado del Escaneo',
-          style: TextStyle(
+        title:  Text(
+          title,
+          style: const TextStyle(
             color: Colors.black87,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -242,7 +239,14 @@ class ResultScreenState extends State<ResultScreen> {
                 ),
           onPressed: () => Navigator.of(context).pop(),
         ),
-      ),
+      );
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: _buildAppbar("Resultado del Escaneo"),
       body: _loading
           ? const Center(
               child: CircularProgressIndicator(
