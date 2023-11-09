@@ -206,41 +206,41 @@ class ResultScreenState extends State<ResultScreen> {
       ),
     );
   }
-  PreferredSizeWidget _buildAppbar(String title){
-    return AppBar(
-        backgroundColor: const Color.fromARGB(44, 208, 255, 0),
-        toolbarHeight: 40,
-        elevation: 0,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25),
-            bottomRight: Radius.circular(25),
-          ),
-        ),
-        centerTitle: true,
-        title:  Text(
-          title,
-          style: const TextStyle(
-            color: Colors.black87,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1,
-          ),
-        ),
-        leading: IconButton(
-          icon: isIOS()
-              ? const Icon(
-                  CupertinoIcons.back,
-                  color: Colors.black,
-                )
-              : const Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      );
 
+  PreferredSizeWidget _buildAppbar(String title) {
+    return AppBar(
+      backgroundColor: const Color.fromARGB(44, 208, 255, 0),
+      toolbarHeight: 40,
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(25),
+          bottomRight: Radius.circular(25),
+        ),
+      ),
+      centerTitle: true,
+      title: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.black87,
+          fontSize: 18.0,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 1,
+        ),
+      ),
+      leading: IconButton(
+        icon: isIOS()
+            ? const Icon(
+                CupertinoIcons.back,
+                color: Colors.black,
+              )
+            : const Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+    );
   }
 
   @override
