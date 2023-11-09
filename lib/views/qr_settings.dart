@@ -18,7 +18,16 @@ class QrSettings extends StatefulWidget {
   QrSettingsState createState() => QrSettingsState();
 }
 
-bool isIOS() {
+
+
+
+
+
+
+
+class QrSettingsState extends State<QrSettings> {
+
+  bool isIOS() {
   if (Platform.isIOS) {
     return true;
   } else {
@@ -26,16 +35,12 @@ bool isIOS() {
   }
 }
 
-class QrSettingsState extends State<QrSettings> {
-  // Vista en la que simplemente se muestra el código QR
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+  PreferredSizeWidget buildDefaultAppbar(String title) {
+    return AppBar(
         backgroundColor: const Color.fromARGB(44, 208, 255, 0),
         toolbarHeight: 35,
         elevation: 0,
-        title: const Text('Código QR'),
+        title: Text(title),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(25),
@@ -61,14 +66,27 @@ class QrSettingsState extends State<QrSettings> {
                   color: Color.fromARGB(255, 0, 0, 0),
                 ),
         ),
-      ),
-      body: Center(
+      );
+  }
+
+  Widget _defaultQrView(double defsize ){
+    return Center(
         child: QrImageView(
           data: widget.data,
           version: QrVersions.auto,
-          size: 300.0,
+          size: defsize,
         ),
-      ),
+      );
+  }
+
+
+
+  // Vista en la que simplemente se muestra el código QR
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildDefaultAppbar("Código QR de Configuración"),
+      body: _defaultQrView(300.0),
     );
   }
 }
