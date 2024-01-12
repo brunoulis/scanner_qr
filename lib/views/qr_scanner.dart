@@ -74,7 +74,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
       // Puedes agregar código aquí si es necesario
     }
   }
-
+  //Funcion para escanear el codigo de barras
   void startBarcodeScan() async {
     try {
       String barcodeScanResult = await FlutterBarcodeScanner.scanBarcode(
