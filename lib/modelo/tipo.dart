@@ -1,7 +1,7 @@
 class Tipo {
   final String event;
   final int error;
-  final descripcion;
+  final String descripcion;
 
   Tipo({
     required this.event,
