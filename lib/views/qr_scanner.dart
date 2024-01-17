@@ -4,12 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:scanner_qr/controllers/DropdownButton.dart';
 import 'package:scanner_qr/controllers/constantes.dart';
 import 'package:scanner_qr/modelo/app_settings.dart';
 import 'package:scanner_qr/views/result_screen.dart';
 import 'package:scanner_qr/modelo/scanned_data_model.dart';
 import 'package:provider/provider.dart';
 import 'package:scanner_qr/views/settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QRScanner extends StatefulWidget {
   final Constantes constantes;
@@ -23,6 +25,8 @@ class QRScanner extends StatefulWidget {
 class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   String scannedData = "";
   List<String> scannedResults = [];
+  final TextEditingController controller = TextEditingController();
+  SharedPreferences? prefs;
 
   @override
   void initState() {
@@ -85,7 +89,8 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
       );
 
       if (barcodeScanResult != '-1') {
-        navigateToSecondScreen(barcodeScanResult);
+        print(barcodeScanResult);
+        navigateToSecondScreen(barcodeScanResult,null);
       }
     } on PlatformException {
       _showErrorDialog("Error al escanear el código");
@@ -94,6 +99,40 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
     }
   }
 
+
+
+// Funcion para mostrar el teclado y que el usuario pueda poner el codigo de barras
+// Eliminar y Recogida
+void _showKeyboardDialog() async {
+  DropdownButtonWidget dropdownButtonWidget = DropdownButtonWidget();
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Ingresa el número'),
+        content: TextField(
+          controller: controller,
+          keyboardType: TextInputType.number,
+        ),
+        actions: <Widget>[
+          dropdownButtonWidget,
+          TextButton(
+            child: Text('Guardar'),
+            onPressed: () async {
+              String number = controller.text;
+              // Guardar el número en SharedPreferences
+              prefs = await SharedPreferences.getInstance();
+              await prefs?.setString('number', number);
+              // Enviamos el número y el valor seleccionado a la siguiente pantalla
+              navigateToSecondScreen(number, dropdownButtonWidget.selectedValue);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
   // Agrega esta función para mostrar el diálogo
   void _showErrorDialog(String error) {
     showDialog(
@@ -128,7 +167,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
     }
   }
 
-  void navigateToSecondScreen(String data) {
+  void navigateToSecondScreen(String data, String? tipo) {
     Provider.of<ScannedDataModel>(context, listen: false).addScannedData(data);
     Navigator.of(context).push(
       PageRouteBuilder(
@@ -139,7 +178,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
             begin: 0.0,
             end: 1.0,
           ).animate(animation),
-          child: ResultScreen(constantes: widget.constantes, scannedData: data),
+          child: ResultScreen(constantes: widget.constantes, scannedData: data, tipo: tipo),
         ),
       ),
     );
@@ -274,6 +313,27 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
     );
   }
 
+  //Creamos un boton para que el usuario pueda poner el codigo de barras por teclado
+  Widget _buildKeyboardIcon() {
+    return Align(
+      alignment: Alignment.bottomLeft,
+      child: Container(
+        margin: const EdgeInsets.all(16.0),
+        child: FloatingActionButton(
+          backgroundColor: const Color.fromARGB(132, 234, 254, 143),
+          onPressed: () {
+            _showKeyboardDialog();
+          },
+          child: isIOS()
+              ? const Icon(CupertinoIcons.keyboard,
+                  color: Color.fromARGB(255, 0, 0, 0))
+              : const Icon(Icons.keyboard,
+                  color: Color.fromARGB(255, 0, 0, 0)),
+        ),
+      ),
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -287,7 +347,15 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                 "Lista de códigos escaneados:"),
             _buildList(),
             _buildTail("Desarrollado por: Gistra.sl"),
-            _buildCameraIcon(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildKeyboardIcon(),
+                _buildCameraIcon(),
+              ],
+            ),
+            
+            
           ],
         ),
       ),

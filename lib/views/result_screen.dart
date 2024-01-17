@@ -12,9 +12,10 @@ import 'package:provider/provider.dart';
 class ResultScreen extends StatefulWidget {
   final String scannedData;
   final Constantes constantes;
+  final String? tipo;
 
   const ResultScreen(
-      {super.key, required this.constantes, required this.scannedData});
+      {super.key, required this.constantes, required this.scannedData, this.tipo});
 
   @override
   ResultScreenState createState() => ResultScreenState();
