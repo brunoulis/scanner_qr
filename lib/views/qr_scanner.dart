@@ -88,7 +88,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
 
       if (barcodeScanResult != '-1') {
         print(barcodeScanResult);
-        navigateToSecondScreen(barcodeScanResult, null);
+        navigateToSecondScreen(barcodeScanResult, "Scanned");
       }
     } on PlatformException {
       _showErrorDialog("Error al escanear el código");

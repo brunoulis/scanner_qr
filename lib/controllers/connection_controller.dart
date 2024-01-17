@@ -63,7 +63,11 @@ class ConnectionController {
         _channel ??= WebSocketChannel.connect(
             Uri.parse('ws://$host:$port/803672868'),
             protocols: ['echo-protocol']);
-        
+        if(typeState == "Recogida"){
+          typeState = "Collection";
+        }else {
+          typeState = "Delete";
+        }
         // Crear un objeto JSON que contenga los datos y el tipo
         Map<String, String> json = {'data': data, 'type': typeState};
         String jsonString = jsonEncode(json);

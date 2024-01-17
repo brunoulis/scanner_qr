@@ -113,6 +113,7 @@ class ResultScreenState extends State<ResultScreen> {
 
   // Agrega esta función para mostrar el diálogo
   void _showErrorDialog(String error) {
+    if(mounted){
     showDialog(
       context: context,
       builder: (context) {
@@ -134,6 +135,7 @@ class ResultScreenState extends State<ResultScreen> {
         );
       },
     );
+    }
   }
 
   void _showErrorSnackbar(String message, int duracion) {
