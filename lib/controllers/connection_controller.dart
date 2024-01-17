@@ -15,11 +15,12 @@ class ConnectionController {
   // Constructor vacio
   ConnectionController();
 
-  static Future<bool> isHostReachable(String host, int port, {Duration timeout = const Duration(seconds: 2)}) async {
+  static Future<bool> isHostReachable(String host, int port, {Duration timeout = const Duration(seconds: 5)}) async {
     try {
       final socket = await Socket.connect(host, port, timeout: timeout);
       return true;
     } catch (e) {
+      print("Error al conectar con el servidor $e");
       return false;
     }
   }
@@ -50,8 +51,9 @@ class ConnectionController {
       //print("Error WebSocketChannelException");
       return null;
     } catch (e) {
-      //print("Error al enviar el dato");
+      print("Error al enviar el dato");
       //print(e);
+      print(e);
       return null;
     }
   }
@@ -59,13 +61,14 @@ class ConnectionController {
   // Funcion usando dart:io para enviar datos por WebSocket con el tipo de dato que sera un string
   static Future<Tipo?> sendaDataWithioType(String data,String typeState, String host, int port) async {
     try {
+      print(port);
       if (await isHostReachable(host, port)) {
         _channel ??= WebSocketChannel.connect(
             Uri.parse('ws://$host:$port/803672868'),
             protocols: ['echo-protocol']);
         if(typeState == "Recogida"){
           typeState = "Collection";
-        }else {
+        }else if (typeState == "Eliminar"){
           typeState = "Delete";
         }
         // Crear un objeto JSON que contenga los datos y el tipo
@@ -88,8 +91,8 @@ class ConnectionController {
       //print("Error WebSocketChannelException");
       return null;
     } catch (e) {
-      //print("Error al enviar el dato");
-      //print(e);
+      print("Error al enviar el dato");
+      print(e);
       return null;
     }
   }

@@ -61,17 +61,19 @@ class ResultScreenState extends State<ResultScreen> {
 
   void sendData() async {
     Tipo? tipo;
+      print(widget.constantes.appSettings!.address);
+      print(widget.constantes.appSettings!.port);
     
       tipo = await ConnectionController.sendaDataWithioType(
           widget.scannedData,widget.type!,
           widget.constantes.appSettings!.address,
           int.parse(widget.constantes.appSettings!.port));
-    /*
+      /*
       tipo = await ConnectionController.sendaDataWithio(
         widget.scannedData,
         widget.constantes.appSettings!.address,
         int.parse(widget.constantes.appSettings!.port));
-    */
+      */
     
     if (tipo != null) {
       // Haz algo con el objeto tipo
