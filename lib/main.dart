@@ -40,16 +40,31 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: primary,
+        useMaterial3: true,
+        colorSchemeSeed: const Color.fromARGB(255, 145, 14, 2),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(0, 246, 28, 86),
-          elevation: 0,
-          toolbarHeight: 30,
+          color: primary,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
+          ),
         ),
-      ),
-      home: QRScanner(constantes: constantes,),
-      debugShowCheckedModeBanner: false,
-      title: 'QR Code Scanner',
-    );
+        //primarySwatch: primary,
+        inputDecorationTheme: const InputDecorationTheme(
+          labelStyle: TextStyle(color: Colors.black),
+          hintStyle: TextStyle(color: Color.fromARGB(255, 145, 14, 2)), 
+          iconColor: Color.fromARGB(255, 145, 14, 2), 
+          prefixIconColor: Color(0xFFEAFE8F),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Color.fromARGB(255, 145, 14, 2), width: 2.0),
+             
+          )),
+
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        
+      )
+      );
   }
+  //backgroundColor: Color.fromARGB(0, 246, 28, 86),
 }

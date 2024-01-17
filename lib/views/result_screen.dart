@@ -12,11 +12,12 @@ import 'package:provider/provider.dart';
 class ResultScreen extends StatefulWidget {
   final String scannedData;
   final Constantes constantes;
-  final String? tipo;
-
+  final String? type;
+  
   const ResultScreen(
-      {super.key, required this.constantes, required this.scannedData, this.tipo});
+      {super.key, required this.constantes, required this.scannedData,required this.type});
 
+  
   @override
   ResultScreenState createState() => ResultScreenState();
 }
@@ -34,7 +35,10 @@ class ResultScreenState extends State<ResultScreen> {
   void initState() {
     if (mounted) {
       super.initState();
+      //print("Datos escaneados "+widget.scannedData);
+      
       sendData();
+      
     }
   }
 
@@ -56,10 +60,19 @@ class ResultScreenState extends State<ResultScreen> {
   }
 
   void sendData() async {
-    Tipo? tipo = await ConnectionController.sendaDataWithio(
+    Tipo? tipo;
+    if (widget.type!= null){
+      tipo = await ConnectionController.sendaDataWithioType(
+          widget.scannedData,widget.type!,
+          widget.constantes.appSettings!.address,
+          int.parse(widget.constantes.appSettings!.port));
+    }else{
+      tipo = await ConnectionController.sendaDataWithio(
         widget.scannedData,
         widget.constantes.appSettings!.address,
         int.parse(widget.constantes.appSettings!.port));
+    }
+    
     if (tipo != null) {
       // Haz algo con el objeto tipo
       if (tipo.error == 0) {
@@ -246,6 +259,7 @@ class ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: _buildAppbar("Resultado del Escaneo"),
       body: _loading

@@ -31,8 +31,10 @@ class ConnectionController {
         _channel ??= WebSocketChannel.connect(
               Uri.parse('ws://$host:$port/803672868'),
               protocols: ['echo-protocol']);
-        _channel!.sink.add(data);
-        print(data);
+        Map<String, String> json = {'data': data, 'type': 'Scanned'};
+        String jsonString = jsonEncode(json);
+        _channel!.sink.add(jsonString);
+        print(jsonString);
         // Escucha la respuesta del servidor
         final respuesta = await _channel!.stream.first;
         //print(respuesta);
@@ -55,7 +57,7 @@ class ConnectionController {
   }
 
   // Funcion usando dart:io para enviar datos por WebSocket con el tipo de dato que sera un string
-  static Future<Tipo?> sendaDataWithioString(String data,String typeState, String host, int port) async {
+  static Future<Tipo?> sendaDataWithioType(String data,String typeState, String host, int port) async {
     try {
       if (await isHostReachable(host, port)) {
         _channel ??= WebSocketChannel.connect(
