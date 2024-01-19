@@ -90,7 +90,7 @@ class ResultScreenState extends State<ResultScreen> {
         }
       } else {
         _showErrorDialog(tipo.descripcion);
-        _showErrorSnackbar("Vuelve a atrás y escanea de nuevo", 2);
+        _showErrorSnackbar("Vuelve y escanea de nuevo", 2);
         deleteElementList();
         if (mounted) {
           setState(() {
@@ -102,7 +102,7 @@ class ResultScreenState extends State<ResultScreen> {
       }
     } else {
       _showErrorDialog("No se pudo conectar con el servidor");
-      _showErrorSnackbar("Vuelve a atrás y escanea de nuevo", 1);
+      _showErrorSnackbar("Vuelve y escanea de nuevo", 1);
       deleteElementList();
       if (mounted) {
         setState(() {
