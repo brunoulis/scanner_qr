@@ -136,6 +136,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   void _showKeyboardDialog() async {
     DropdownButtonWidget dropdownButtonWidget = DropdownButtonWidget();
     bool pass =false;
+    String constNumber="";
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -170,6 +171,8 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                 ),
               ),
               onPressed: () async {
+                // Guardamos el valor tecleado en una variable
+                constNumber = controller.text;
                 Navigator.of(context).pop();
                 showDialog(
                   context: context,
@@ -177,7 +180,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                     return AlertDialog(
                       title: const Text('Confirmación'),
                       content:
-                          const Text('¿Estás seguro de que quieres enviarlo?'),
+                          const Text('¿Seguro que quieres enviarlo?'),
                       actions: <Widget>[
                         TextButton(
                           child: const Text('Cancelar'),
@@ -186,7 +189,6 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                           },
                         ),
                         TextButton(
-                          
                           child: const Text('Confirmar'),
                           onPressed: () {
                             String number = controller.text;
@@ -199,7 +201,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                               Navigator.of(context).pop();
                               // Enviamos el número y el valor seleccionado a la siguiente pantalla
                               navigateToSecondScreen(
-                                  number, dropdownButtonWidget.selectedValue);
+                                  constNumber, dropdownButtonWidget.selectedValue);
                             } else {
                               // Muestra un mensaje de error si el número está vacío
                                Navigator.of(context).pop();

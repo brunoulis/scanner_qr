@@ -14,7 +14,7 @@ void main() async {
   // ignore: unused_local_variable
   final appSupportDirectory = await getApplicationSupportDirectory();
   // Obtenemos la ruta del archivo de configuración.
-  final filePath = '${appDocumentsDirectory.path}/settings.txt';
+  final filePath = '${appDocumentsDirectory.path}/settings.cfg';
   // Creamos una instancia de la clase Constantes.
   final Constantes constantes = Constantes(filePath:filePath);
   // Ejecutamos la aplicación.

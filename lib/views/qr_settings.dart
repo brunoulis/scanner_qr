@@ -18,68 +18,58 @@ class QrSettings extends StatefulWidget {
   QrSettingsState createState() => QrSettingsState();
 }
 
-
-
-
-
-
-
-
 class QrSettingsState extends State<QrSettings> {
-
   bool isIOS() {
-  if (Platform.isIOS) {
-    return true;
-  } else {
-    return false;
+    if (Platform.isIOS) {
+      return true;
+    } else {
+      return false;
+    }
   }
-}
 
   PreferredSizeWidget buildDefaultAppbar(String title) {
     return AppBar(
-        backgroundColor: const Color.fromARGB(44, 208, 255, 0),
-        toolbarHeight: 35,
-        elevation: 0,
-        title: Text(title),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25),
-            bottomRight: Radius.circular(25),
-          ),
+      backgroundColor: const Color.fromARGB(44, 208, 255, 0),
+      toolbarHeight: 35,
+      elevation: 0,
+      title: Text(title),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(25),
+          bottomRight: Radius.circular(25),
         ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Settings(
-                          constantes: widget.constantes,
-                        )));
-          },
-          icon: isIOS()
-              ? const Icon(
-                  CupertinoIcons.back,
-                  color: Color.fromARGB(255, 0, 0, 0),
-                )
-              : const Icon(
-                  Icons.arrow_back,
-                  color: Color.fromARGB(255, 0, 0, 0),
-                ),
-        ),
-      );
+      ),
+      leading: IconButton(
+        onPressed: () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Settings(
+                        constantes: widget.constantes,
+                      )));
+        },
+        icon: isIOS()
+            ? const Icon(
+                CupertinoIcons.back,
+                color: Color.fromARGB(255, 0, 0, 0),
+              )
+            : const Icon(
+                Icons.arrow_back,
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),
+      ),
+    );
   }
 
-  Widget _defaultQrView(double defsize ){
+  Widget _defaultQrView(double defsize) {
     return Center(
-        child: QrImageView(
-          data: widget.data,
-          version: QrVersions.auto,
-          size: defsize,
-        ),
-      );
+      child: QrImageView(
+        data: widget.data,
+        version: QrVersions.auto,
+        size: defsize,
+      ),
+    );
   }
-
-
 
   // Vista en la que simplemente se muestra el código QR
   @override
