@@ -135,6 +135,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   // Eliminar y Recogida
   void _showKeyboardDialog() async {
     DropdownButtonWidget dropdownButtonWidget = DropdownButtonWidget();
+    bool pass =false;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -149,7 +150,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
               hoverColor: Colors.black,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: const BorderSide(color: Colors.black, width: 2.0), // Cambia el color y el ancho del borde aquí
+                borderSide: const BorderSide(color: Colors.black, width: 2.0),
               ),
               contentPadding: const EdgeInsets.all(15.0),
             ),
@@ -160,7 +161,7 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
             dropdownButtonWidget,
             TextButton(
               child: const Text(
-                'Guardar',
+                'Enviar',
                 style: TextStyle(
                   color: Colors.black87,
                   fontSize: 13.2,
@@ -169,15 +170,47 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                 ),
               ),
               onPressed: () async {
-                String number = controller.text;
-                // Guardar el número en SharedPreferences
-
-                // Enviamos el número y el valor seleccionado a la siguiente pantalla
-                navigateToSecondScreen(
-                    number, dropdownButtonWidget.selectedValue);
-                //Reinciamos el valor del textfield
-                controller.text = "";
-                number = controller.text;
+                Navigator.of(context).pop();
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Confirmación'),
+                      content:
+                          const Text('¿Estás seguro de que quieres enviarlo?'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: const Text('Cancelar'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        TextButton(
+                          
+                          child: const Text('Confirmar'),
+                          onPressed: () {
+                            String number = controller.text;
+                            // Comprueba si el número no está vacío
+                            if (number != null && number.trim().isNotEmpty) {
+                              // Guardar el número en SharedPreferences
+                              //Reinciamos el valor del textfield
+                              controller.text = "";
+                              number = controller.text;
+                              Navigator.of(context).pop();
+                              // Enviamos el número y el valor seleccionado a la siguiente pantalla
+                              navigateToSecondScreen(
+                                  number, dropdownButtonWidget.selectedValue);
+                            } else {
+                              // Muestra un mensaje de error si el número está vacío
+                               Navigator.of(context).pop();
+                              
+                            }
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
             ),
           ],

@@ -27,6 +27,7 @@ class ResultScreenState extends State<ResultScreen> {
   Tipo? _tipo;
   bool _loading = true;
   bool _error = false;
+  String tipomesasage = "";
 
   IconData iconError = Icons.error_outline;
   IconData iconSuccess = Icons.check_circle_outline;
@@ -197,12 +198,19 @@ class ResultScreenState extends State<ResultScreen> {
                   iconSuccess,
                   color: const Color.fromARGB(255, 51, 117, 53),
                 ),
-                const Text(
-                  'Código escaneado con éxito',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 51, 117, 53)),
+               Text(
+                  widget.type == 'Escaneado'
+                      ? 'Código escaneado con éxito'
+                      : widget.type == 'Eliminar'
+                          ? 'Código eliminado con éxito'
+                          : widget.type == 'Recogida'
+                              ? 'Código recogido con éxito'
+                              : 'Otro texto',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 51, 117, 53),
+                  ),
                 ),
               ],
             ),
