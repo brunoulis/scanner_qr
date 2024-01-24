@@ -182,9 +182,15 @@ class ResultScreenState extends State<ResultScreen> {
                   iconError,
                   color: const Color.fromARGB(255, 187, 51, 41),
                 ),
-                const Text(
-                  'Error al escanear el código',
-                  style: TextStyle(
+                Text(
+                  widget.type == 'Escaneado'
+                      ? 'Error código en el escaneado'
+                      : widget.type == 'Eliminar'
+                          ? 'Error código al eliminar'
+                          : widget.type == 'Recogida'
+                              ? 'Error código al modificar la recogida'
+                              : 'Error Texto no reconocido',
+                  style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 187, 51, 41)),
@@ -205,7 +211,7 @@ class ResultScreenState extends State<ResultScreen> {
                           ? 'Código eliminado con éxito'
                           : widget.type == 'Recogida'
                               ? 'Código recogido con éxito'
-                              : 'Otro texto',
+                              : 'Tipo no reconocido',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
