@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:scanner_qr/controllers/DropdownButton.dart';
+import 'package:scanner_qr/controllers/dropdownButton.dart';
 import 'package:scanner_qr/controllers/constantes.dart';
 import 'package:scanner_qr/modelo/app_settings.dart';
 import 'package:scanner_qr/views/result_screen.dart';
