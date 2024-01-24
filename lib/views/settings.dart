@@ -108,72 +108,78 @@ class SettingsState extends State<Settings> {
     );
   }
 
+  PreferredSizeWidget initAppbar() {
+    return AppBar(
+      title: const Center(
+        child: Text(
+          "BARD VISION",
+          style: TextStyle(
+              color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.w800),
+        ),
+      ),
+      backgroundColor: const Color.fromARGB(44, 208, 255, 0),
+      toolbarHeight: 35,
+      elevation: 0,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(25),
+          bottomRight: Radius.circular(25),
+        ),
+      ),
+      leading: IconButton(
+          onPressed: () {
+            // Pasamos a la pantalla de qr_settings
+            if (_portController.text == "" || _portController.text == null) {
+              _portController.text = "5022";
+              _showCancelSnackbar("El puerto no puede estar vacío");
+              return;
+            }
+            if (_addressController.text == "" ||
+                _addressController.text == null) {
+              _showCancelSnackbar("La dirección no puede estar vacía");
+              return;
+            }
+            String encryptedAddress =
+                encryptString.encryptar(_addressController.text);
+            String encryptedPort =
+                encryptString.encryptar(_portController.text);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => QrSettings(
+                        data: "$encryptedAddress:$encryptedPort",
+                        constantes: widget.constantes,
+                      )),
+            );
+          },
+          icon: isIOS()
+              ? const Icon(
+                  CupertinoIcons.qrcode,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                )
+              : const Icon(
+                  Icons.qr_code_2,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                )),
+      actions: [
+        IconButton(
+          onPressed: () {
+            startBarcodeScan();
+          },
+          icon: isIOS()
+              ? const Icon(CupertinoIcons.qrcode_viewfinder,
+                  color: Color.fromARGB(255, 0, 0, 0))
+              : const Icon(Icons.qr_code_scanner_sharp,
+                  color: Color.fromARGB(255, 0, 0, 0)),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text(
-            "BARD VISION",
-            style: TextStyle(
-                color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.w800),
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(44, 208, 255, 0),
-        toolbarHeight: 35,
-        elevation: 0,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25),
-            bottomRight: Radius.circular(25),
-          ),
-        ),
-        leading: IconButton(
-            onPressed: () {
-              // Pasamos a la pantalla de qr_settings
-              if(_portController.text == ""|| _portController.text == null) {
-                _portController.text = "5022";
-                _showCancelSnackbar("El puerto no puede estar vacío");
-                return;
-              }
-              if(_addressController.text == ""|| _addressController.text == null) {
-                _showCancelSnackbar("La dirección no puede estar vacía");
-                return;
-              }
-              String encryptedAddress = encryptString.encryptar(_addressController.text);
-              String encryptedPort = encryptString.encryptar(_portController.text);
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => QrSettings(
-                          data:
-                              "$encryptedAddress:$encryptedPort",
-                          constantes: widget.constantes,
-                        )),
-              );
-            },
-            icon: isIOS()
-                ? const Icon(
-                    CupertinoIcons.qrcode,
-                    color: Color.fromARGB(255, 0, 0, 0),
-                  )
-                : const Icon(
-                    Icons.qr_code_2,
-                    color: Color.fromARGB(255, 0, 0, 0),
-                  )),
-        actions: [
-          IconButton(
-            onPressed: () {
-              startBarcodeScan();
-            },
-            icon: isIOS()
-                ? const Icon(CupertinoIcons.qrcode_viewfinder,
-                    color: Color.fromARGB(255, 0, 0, 0))
-                : const Icon(Icons.qr_code_scanner_sharp,
-                    color: Color.fromARGB(255, 0, 0, 0)),
-          )
-        ],
-      ),
+      appBar: initAppbar(),
       body: _loading
           ? const Center(
               child: CircularProgressIndicator(
@@ -404,5 +410,3 @@ class SettingsState extends State<Settings> {
     );
   }
 }
-
-
