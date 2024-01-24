@@ -132,7 +132,7 @@ class SettingsState extends State<Settings> {
             onPressed: () {
               // Pasamos a la pantalla de qr_settings
               if(_portController.text == ""|| _portController.text == null) {
-                _portController.text = "5522";
+                _portController.text = "5022";
                 _showCancelSnackbar("El puerto no puede estar vacío");
                 return;
               }
