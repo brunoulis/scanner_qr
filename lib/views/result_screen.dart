@@ -183,7 +183,7 @@ class ResultScreenState extends State<ResultScreen> {
                   color: const Color.fromARGB(255, 187, 51, 41),
                 ),
                 Text(
-                  widget.type == 'Escaneado'
+                  widget.type == 'Scanned'
                       ? 'Error código en el escaneado'
                       : widget.type == 'Eliminar'
                           ? 'Error código al eliminar'
@@ -205,7 +205,7 @@ class ResultScreenState extends State<ResultScreen> {
                   color: const Color.fromARGB(255, 51, 117, 53),
                 ),
                Text(
-                  widget.type == 'Escaneado'
+                  widget.type == 'Scanned'
                       ? 'Código escaneado con éxito'
                       : widget.type == 'Eliminar'
                           ? 'Código eliminado con éxito'
