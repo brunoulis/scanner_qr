@@ -135,26 +135,50 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
   // Eliminar y Recogida
   void _showKeyboardDialog() async {
     DropdownButtonWidget dropdownButtonWidget = DropdownButtonWidget();
-    bool pass =false;
-    String constNumber="";
+    bool pass = false;
+    String constNumber = "";
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Ingresa el número'),
-          content: TextField(
-            decoration: InputDecoration(
-              labelText: 'Número',
-              labelStyle: const TextStyle(color: Colors.black),
-              hintStyle: const TextStyle(color: Colors.black),
-              hintText: 'Ingresa un número',
-              hoverColor: Colors.black,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-                borderSide: const BorderSide(color: Colors.black, width: 2.0),
+          title: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(1.0),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: const Color.fromARGB(54, 0, 0, 0),
+                width: 2.0,
               ),
-              contentPadding: const EdgeInsets.all(15.0),
+              color: const Color.fromARGB(44, 208, 255, 0),
+              borderRadius: BorderRadius.circular(10),
             ),
+            child: const Text(
+              'Ingresa el número:',
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+            ),
+          ),
+          content: TextField(
+            cursorColor: Colors.black87,
+            decoration: InputDecoration(
+              focusColor: Colors.black87,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(18),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(18),
+                borderSide: const BorderSide(color: Colors.black87, width: 2.0),
+              ),
+              hintText: 'Escribe el número',
+              hintStyle: const TextStyle(
+                color: Colors.black54,
+                fontSize: 13.2,
+                fontWeight: FontWeight.w900,
+                letterSpacing: 1,
+              ),
+            ),
+            autofocus: true,
             controller: controller,
             keyboardType: TextInputType.number,
           ),
@@ -178,18 +202,35 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('Confirmación'),
-                      content:
-                          const Text('¿Seguro que quieres enviarlo?'),
+                      title: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(1.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color.fromARGB(54, 0, 0, 0),
+                              width: 2.0,
+                            ),
+                            color: const Color.fromARGB(44, 208, 255, 0),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Text('Confirmación',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600))),
+                      content: const Text('¿Seguro que quieres enviarlo?'),
                       actions: <Widget>[
                         TextButton(
-                          child: const Text('Cancelar'),
+                          child: const Text('Cancelar',
+                              style: TextStyle(color: Colors.black)),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
                         ),
                         TextButton(
-                          child: const Text('Confirmar'),
+                          child: const Text(
+                            'Confirmar',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           onPressed: () {
                             String number = controller.text;
                             // Comprueba si el número no está vacío
@@ -200,12 +241,11 @@ class QRScannerState extends State<QRScanner> with WidgetsBindingObserver {
                               number = controller.text;
                               Navigator.of(context).pop();
                               // Enviamos el número y el valor seleccionado a la siguiente pantalla
-                              navigateToSecondScreen(
-                                  constNumber, dropdownButtonWidget.selectedValue);
+                              navigateToSecondScreen(constNumber,
+                                  dropdownButtonWidget.selectedValue);
                             } else {
                               // Muestra un mensaje de error si el número está vacío
-                               Navigator.of(context).pop();
-                              
+                              Navigator.of(context).pop();
                             }
                           },
                         ),

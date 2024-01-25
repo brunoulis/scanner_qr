@@ -7,7 +7,7 @@ import 'package:scanner_qr/modelo/scanned_data_model.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();  // Inicializamos los plugins.
+  WidgetsFlutterBinding.ensureInitialized(); // Inicializamos los plugins.
   // Obtenemos el directorio de documentos de la aplicación.
   final appDocumentsDirectory = await getApplicationDocumentsDirectory();
   // Obtenemos el directorio de soporte de la aplicación.
@@ -16,21 +16,23 @@ void main() async {
   // Obtenemos la ruta del archivo de configuración.
   final filePath = '${appDocumentsDirectory.path}/settings.cfg';
   // Creamos una instancia de la clase Constantes.
-  final Constantes constantes = Constantes(filePath:filePath);
+  final Constantes constantes = Constantes(filePath: filePath);
   // Ejecutamos la aplicación.
-    runApp(
-      ChangeNotifierProvider(
-        create: (context) => ScannedDataModel(),
-        child: MaterialApp(
-          theme: ThemeData(
-            primarySwatch: primary,
-          ),
-          home: QRScanner(constantes: constantes,),
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ScannedDataModel(),
+      child: MaterialApp(
+        theme: ThemeData(
+          primarySwatch: primary,
+        ),
+        home: QRScanner(
+          constantes: constantes,
         ),
       ),
-
-    );
+    ),
+  );
 }
+
 class MyApp extends StatelessWidget {
   final Constantes constantes;
   const MyApp({super.key, required this.constantes});
@@ -39,32 +41,41 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: const Color.fromARGB(255, 145, 14, 2),
-        appBarTheme: const AppBarTheme(
-          color: primary,
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.w800,
-          ),
+        theme: ThemeData(
+      useMaterial3: true,
+      colorSchemeSeed: const Color.fromARGB(255, 145, 14, 2),
+      colorScheme: const ColorScheme(
+          background: Colors.white,
+          error: primary,
+          onError: primary,
+          primary: primary,
+          secondary: primary,
+          surface: Colors.white,
+          onBackground: Colors.black,
+          onPrimary: Colors.black,
+          onSecondary: Colors.black,
+          onSurface: Colors.black,
+          brightness: Brightness.light),
+      appBarTheme: const AppBarTheme(
+        color: primary,
+        titleTextStyle: TextStyle(
+          color: Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.w800,
         ),
-        //primarySwatch: primary,
-        inputDecorationTheme: const InputDecorationTheme(
+      ),
+      primarySwatch: primary,
+      inputDecorationTheme: const InputDecorationTheme(
           labelStyle: TextStyle(color: Colors.black),
-          hintStyle: TextStyle(color: Color.fromARGB(255, 145, 14, 2)), 
-          iconColor: Color.fromARGB(255, 145, 14, 2), 
+          hintStyle: TextStyle(color: Color.fromARGB(255, 145, 14, 2)),
+          iconColor: Color.fromARGB(255, 145, 14, 2),
           prefixIconColor: Color(0xFFEAFE8F),
           enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromARGB(255, 145, 14, 2), width: 2.0),
-             
+            borderSide:
+                BorderSide(color: Color.fromARGB(255, 145, 14, 2), width: 2.0),
           )),
-
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        
-      )
-      );
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+    ));
   }
   //backgroundColor: Color.fromARGB(0, 246, 28, 86),
 }
